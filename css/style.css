@@ -1,0 +1,14 @@
+body {
+	background: darkslategray;
+	padding: 0;
+	margin: 0;
+}
+
+#wrapper {
+	width: 600px;
+	margin: 0 auto;
+}
+
+#game:hover {
+	cursor: none;
+}
