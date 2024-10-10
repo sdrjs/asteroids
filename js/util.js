@@ -25,3 +25,11 @@ function cotan(x) {
 function degToRad(degrees) {
     return degrees * (Math.PI / 180);
 }
+
+function randomCall({ probability, fn }) {
+    for (let i = 0; i < Math.floor(probability); i++) {
+        fn();
+    }
+
+    if (Math.random() < probability % 1) fn();
+}

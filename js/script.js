@@ -81,7 +81,7 @@ function game() { // основной игровой цикл
 }
 
 function update(dt) { /* dt - time in seconds */
-    if (Math.random() < 1.5 * dt) generateAsteroid();
+    randomCall({ probability: 1.5 * dt, fn: generateAsteroid });
 
     for (let i = 0; i < asteroids.length; i++) {
         const asteroid = asteroids[i];
