@@ -150,7 +150,6 @@ function update(dt) { /* dt - time in seconds */
         shieldParams = { ...shieldParams, x, y };
     }
 
-    outer:
     for (let i = 0; i < fires.length; i++) {
         const fire = fires[i];
 
@@ -162,6 +161,10 @@ function update(dt) { /* dt - time in seconds */
 
         fire.x += fire.dx * dt;
         fire.y += fire.dy * dt;
+    }
+
+    for (let i = 0; i < fires.length; i++) {
+        const fire = fires[i];
 
         for (let j = 0; j < asteroids.length; j++) {
             const asteroid = asteroids[j];
@@ -185,8 +188,7 @@ function update(dt) { /* dt - time in seconds */
                 const explosionY = explosionCenterY - explosionHeight / 2;
 
                 explosions.push({ x: explosionX, y: explosionY, width: explosionWidth, height: explosionHeight, frame: 0, sx: 0, sy: 0 });
-
-                continue outer;
+                break;
             }
         }
     }
