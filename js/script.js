@@ -9,9 +9,10 @@ const ship = {};
 const fires = [];
 const explosions = [];
 
-let repaintCount = 0;
-let explosionParams = { sWidth: 128, sHeight: 128, animSpeed: 0.7, size: 1.5 };
-let shieldParams = { sWidth: 192, sHeight: 192, animSpeed: 1, offsetY: 7, sizeX: 2, sizeY: 2.5 };
+const timers = {};
+
+let explosionParams = { sWidth: 128, sHeight: 128, framesPerSecond: 42, size: 1.5 };
+let shieldParams = { sWidth: 192, sHeight: 192, framesPerSecond: 60, offsetY: 7, sizeX: 2, sizeY: 2.5 };
 
 const FIRE_SIZE = 30;
 
@@ -20,6 +21,15 @@ let cursorY;
 
 preload()
     .then(() => {
+        timers.dtCalculated = timers.generatedFires = Date.now();
+        timers.calcDt = function() {
+            const now = Date.now();
+            const dt = (now - timers.dtCalculated) / 1000;
+            timers.dtCalculated = now;
+
+            return dt;
+        }
+
         ship.x = (canvas.width - I.ship.width) / 2;
         ship.y = (canvas.height - I.ship.height) / 2;
 
@@ -63,13 +73,15 @@ async function preload() {
 }
 
 function game() { // основной игровой цикл
-    update();
+    const dt = timers.calcDt();
+    
+    update(dt);
     render();
     requestAnimationFrame(game);
 }
 
-function update() { // функция, которая будет обновлять данные (физика и тд)
-    if (Math.random() < 0.025) generateAsteroid();
+function update(dt) { /* dt - time in seconds */
+    if (Math.random() < 1.5 * dt) generateAsteroid();
 
     for (let i = 0; i < asteroids.length; i++) {
         const asteroid = asteroids[i];
@@ -82,8 +94,8 @@ function update() { // функция, которая будет обновля�
 
         if (asteroid.x < 0 || asteroid.x > canvas.width - asteroid.width) asteroid.dx = -asteroid.dx;
 
-        asteroid.x += asteroid.dx;
-        asteroid.y += asteroid.dy;
+        asteroid.x += asteroid.dx * dt;
+        asteroid.y += asteroid.dy * dt;
     }
 
     if (cursorX) {
@@ -103,7 +115,7 @@ function update() { // функция, которая будет обновля�
     for (let i = 0; i < explosions.length; i++) {
         const expl = explosions[i];
 
-        expl.frame += explosionParams.animSpeed;
+        expl.frame += explosionParams.framesPerSecond * dt;
         const currentFrame = Math.floor(expl.frame);
 
         if (currentFrame >= explosionParams.framesTotal) {
@@ -120,7 +132,7 @@ function update() { // функция, которая будет обновля�
     }
 
     {
-        shieldParams.frame += shieldParams.animSpeed;
+        shieldParams.frame += shieldParams.framesPerSecond * dt;
         const shieldFrame = Math.floor(shieldParams.frame % shieldParams.framesTotal);
     
         const frameX = shieldFrame % shieldParams.framesX;
@@ -148,8 +160,8 @@ function update() { // функция, которая будет обновля�
             continue;
         }
 
-        fire.x += fire.dx;
-        fire.y += fire.dy;
+        fire.x += fire.dx * dt;
+        fire.y += fire.dy * dt;
 
         for (let j = 0; j < asteroids.length; j++) {
             const asteroid = asteroids[j];
@@ -179,10 +191,13 @@ function update() { // функция, которая будет обновля�
         }
     }
 
-    if (++repaintCount % 40 === 0) generateFires();
+    if (timers.dtCalculated - timers.generatedFires > 670) {
+        generateFires();
+        timers.generatedFires = timers.dtCalculated;
+    }
 }
 
-function render() { // функция, которая занимается отрисовкой
+function render() {
     ctx.drawImage(I.bg, 0, 0, 600, 600);
 
     for (let expl of explosions) {
@@ -208,8 +223,8 @@ function generateAsteroid() {
     const x = getRandomInteger({ max: canvas.width - width });
     const y = -height;
 
-    const dx = getRandomNumber({ max: 1.5, withOppositeSign: true });
-    const dy = getRandomNumber({ min: 0.7, max: 2.2 });
+    const dx = getRandomNumber({ max: 90, withOppositeSign: true });
+    const dy = getRandomNumber({ min: 42, max: 132 });
 
     asteroids.push({ x, y, dx, dy, width, height });
 }
@@ -217,7 +232,7 @@ function generateAsteroid() {
 function generateFires() {
     const angleBetweenFires = 5;
     const firesCount = 3; // max: 90 / angleBetweenFires
-    const maxDy = 5;
+    const maxDy = 300;
 
     const angles = getAngles(firesCount, angleBetweenFires);
 
