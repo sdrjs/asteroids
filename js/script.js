@@ -13,9 +13,7 @@ const timers = {};
 const FPS = {};
 const gameOver = {};
 
-const flags = {
-    isGameOver: false,
-}
+const flags = {};
 
 let explosionParams = { sWidth: 128, sHeight: 128, framesPerSecond: 42, size: 1.5 };
 let shieldParams = { sWidth: 192, sHeight: 192, framesPerSecond: 60, offsetY: 7, sizeX: 2, sizeY: 2.5 };
@@ -26,16 +24,8 @@ let cursorX;
 let cursorY;
 
 preload()
-    .then(() => {
-        setParams();
-
-        canvas.addEventListener('pointermove', function(e) {
-            cursorX = e.offsetX;
-            cursorY = e.offsetY;
-        });
-
-        game();
-    });
+    .then(startGame)
+    .then(game);
 
 async function preload() {
     await loadImages([
@@ -77,4 +67,34 @@ function game() { // основной игровой цикл
 
     timers.last = timers.now;
     requestAnimationFrame(game);
+}
+
+function updateCursorPosition(e) {
+    cursorX = e.offsetX;
+    cursorY = e.offsetY;
+}
+
+function startGame() {
+    setParams();
+
+    flags.isGameOver = false;
+
+    timers.generatedFires = null;
+
+    asteroids.length = 0;
+    fires.length = 0;
+    explosions.length = 0;
+
+    canvas.addEventListener('pointermove', updateCursorPosition);
+}
+
+function finishGame() {
+    generate.shipExplosion();
+    
+    flags.isGameOver = true;
+
+    canvas.removeEventListener('pointermove', updateCursorPosition);
+    cursorX = cursorY = null;
+    
+    setTimeout(startGame, 5000);
 }

@@ -119,28 +119,29 @@ function update(dt) { /* dt - time in seconds */
         }
     }
 
-    for (let i = 0; i < asteroids.length; i++) {
-        const asteroid = asteroids[i];
+    if (!flags.isGameOver) {
+        for (let i = 0; i < asteroids.length; i++) {
+            const asteroid = asteroids[i];
+        
+            if (checkIntersection({
+                obj1: { x: ship.x, y: ship.y, width: I.ship.width, height: I.ship.height }, 
+                obj2: { x: asteroid.x, y: asteroid.y, width: asteroid.width, height: asteroid.height },
+            })) {
+                asteroids.splice(i, 1);
+                i--;
     
-        if (checkIntersection({
-            obj1: { x: ship.x, y: ship.y, width: I.ship.width, height: I.ship.height }, 
-            obj2: { x: asteroid.x, y: asteroid.y, width: asteroid.width, height: asteroid.height },
-        })) {
-            asteroids.splice(i, 1);
-            i--;
-
-            generate.asteroidExplosion(asteroid);
-
-            if (shieldParams.isActive) {
-                shieldParams.isActive = false;
-                shieldParams.destructionTime = timers.now;
-            } else if (ship.lifesCount > 0) {
-                ship.lifesCount--;
-                ship.lifes[ship.lifesCount].isEmpty = true;
-
-                if (ship.lifesCount === 0) {
-                    flags.isGameOver = true;
-                    generate.shipExplosion();
+                generate.asteroidExplosion(asteroid);
+    
+                if (shieldParams.isActive) {
+                    shieldParams.isActive = false;
+                    shieldParams.destructionTime = timers.now;
+                } else if (ship.lifesCount > 0) {
+                    ship.lifesCount--;
+                    ship.lifes[ship.lifesCount].isEmpty = true;
+    
+                    if (ship.lifesCount === 0) {
+                        finishGame();
+                    }
                 }
             }
         }
