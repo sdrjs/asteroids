@@ -11,10 +11,12 @@ function render() {
         ctx.drawImage(I.fire, fire.x, fire.y, FIRE_SIZE, FIRE_SIZE);
     }
 
-    ctx.drawImage(I.ship, ship.x, ship.y);
-    
-    if (shieldParams.isActive) {
-        ctx.drawImage(I.shield, shieldParams.sx, shieldParams.sy, shieldParams.sWidth, shieldParams.sHeight, shieldParams.x, shieldParams.y, shieldParams.width, shieldParams.height);
+    if (!flags.isGameOver) {
+        ctx.drawImage(I.ship, ship.x, ship.y);
+
+        if (shieldParams.isActive) {
+            ctx.drawImage(I.shield, shieldParams.sx, shieldParams.sy, shieldParams.sWidth, shieldParams.sHeight, shieldParams.x, shieldParams.y, shieldParams.width, shieldParams.height);
+        }
     }
 
     for (let asteroid of asteroids) {
@@ -35,5 +37,12 @@ function render() {
         const lifeIcon = life.isEmpty ? I.heartEmpty : I.heart;
         
         ctx.drawImage(lifeIcon, life.x, life.y, life.width, life.height);
+    }
+
+    if (flags.isGameOver) {
+        for (let style in gameOver.styles) {
+            ctx[style] = gameOver.styles[style];
+        }
+        ctx.fillText(gameOver.text, gameOver.x, gameOver.y);
     }
 }

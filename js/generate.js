@@ -73,9 +73,23 @@ const generate = (() => {
         explosions.push({ x: explosionX, y: explosionY, width: explosionWidth, height: explosionHeight, frame: 0, sx: 0, sy: 0 });
     }
 
+    function generateShipExplosion() {
+        const explosionWidth = Math.max(I.ship.width, I.ship.height) * ship.explosionScale;
+        const explosionHeight = Math.max(I.ship.width, I.ship.height) * ship.explosionScale;
+    
+        const explosionCenterX = ship.x + I.ship.width / 2;
+        const explosionCenterY = ship.y + I.ship.height / 2;
+    
+        const explosionX = explosionCenterX - explosionWidth / 2;
+        const explosionY = explosionCenterY - explosionHeight / 2;
+    
+        explosions.push({ x: explosionX, y: explosionY, width: explosionWidth, height: explosionHeight, frame: 0, sx: 0, sy: 0 });
+    }
+
     return {
         asteroid: generateAsteroid,
         fires: generateFires,
         asteroidExplosion: generateAsteroidExplosion,
+        shipExplosion: generateShipExplosion,
     }
 })();

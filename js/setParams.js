@@ -5,10 +5,13 @@ function setParams() {
     setFpsParams();
     setExplosionParams();
     setShieldParams();
+    setGameOverParams();
 
     function setShipParams() {
         ship.x = (canvas.width - I.ship.width) / 2;
         ship.y = (canvas.height - I.ship.height) / 2;
+        
+        ship.explosionScale = 3;
         
         {
             ship.lifesCount = 3;
@@ -72,5 +75,19 @@ function setParams() {
         const height = I.ship.height * shieldParams.sizeY;
     
         shieldParams = { ...shieldParams, isActive, regenerationTime, spriteWidth, spriteHeight, framesX, framesY, framesTotal, frame: 0, width, height };
+    }
+
+    function setGameOverParams() {
+        gameOver.text = 'GAME OVER';
+
+        gameOver.x = canvas.width / 2;
+        gameOver.y = canvas.height / 2;
+
+        gameOver.styles = {
+            fillStyle: 'white',
+            font: '40px sans-serif',
+            textAlign: 'center',
+            textBaseline: 'middle',
+        };
     }
 }

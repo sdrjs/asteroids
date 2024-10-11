@@ -9,7 +9,7 @@ function update(dt) { /* dt - time in seconds */
         FPS.lastMeasurement = timers.now;
     }
 
-    randomCall({ probability: 1.5 * dt, fn: generate.asteroid });
+    if (!flags.isGameOver) randomCall({ probability: 1.5 * dt, fn: generate.asteroid });
 
     for (let i = 0; i < asteroids.length; i++) {
         const asteroid = asteroids[i];
@@ -30,7 +30,7 @@ function update(dt) { /* dt - time in seconds */
         asteroid.centerY = asteroid.y + asteroid.height / 2;
     }
 
-    if (cursorX) {
+    if (!flags.isGameOver && cursorX) {
         let shipX = cursorX - I.ship.width / 2;
         let shipY = cursorY - I.ship.height / 2;
 
@@ -137,13 +137,20 @@ function update(dt) { /* dt - time in seconds */
             } else if (ship.lifesCount > 0) {
                 ship.lifesCount--;
                 ship.lifes[ship.lifesCount].isEmpty = true;
+
+                if (ship.lifesCount === 0) {
+                    flags.isGameOver = true;
+                    generate.shipExplosion();
+                }
             }
         }
     }
 
-    if (!timers.generatedFires) timers.generatedFires = timers.now;
-    if (timers.now - timers.generatedFires > 670) {
-        generate.fires();
-        timers.generatedFires = timers.now;
+    if (!flags.isGameOver) {
+        if (!timers.generatedFires) timers.generatedFires = timers.now;
+        if (timers.now - timers.generatedFires > 670) {
+            generate.fires();
+            timers.generatedFires = timers.now;
+        }
     }
 }

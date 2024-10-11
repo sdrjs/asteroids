@@ -11,6 +11,11 @@ const explosions = [];
 
 const timers = {};
 const FPS = {};
+const gameOver = {};
+
+const flags = {
+    isGameOver: false,
+}
 
 let explosionParams = { sWidth: 128, sHeight: 128, framesPerSecond: 42, size: 1.5 };
 let shieldParams = { sWidth: 192, sHeight: 192, framesPerSecond: 60, offsetY: 7, sizeX: 2, sizeY: 2.5 };
