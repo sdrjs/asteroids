@@ -4,6 +4,7 @@ const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
 
 const I = {}; // images
+const params = {};
 const asteroids = [];
 const ship = {};
 const fires = [];

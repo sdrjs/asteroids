@@ -1,6 +1,10 @@
 'use strict';
 
 function setParams() {
+    params.asteroidsReplaceCount = 3;
+    params.asteroidsCount = 1.5;
+    params.asteroidsIncrease = 0.05;
+
     setShipParams();
     setFpsParams();
     setExplosionParams();

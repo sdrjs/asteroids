@@ -9,7 +9,10 @@ function update(dt) { /* dt - time in seconds */
         FPS.lastMeasurement = timers.now;
     }
 
-    if (!flags.isGameOver) randomCall({ probability: 1.5 * dt, fn: generate.asteroid });
+    if (!flags.isGameOver) {
+        randomCall({ probability: params.asteroidsCount * dt, fn: generate.asteroid });
+        params.asteroidsCount += params.asteroidsIncrease * dt;
+    }
 
     for (let i = 0; i < asteroids.length; i++) {
         const asteroid = asteroids[i];
@@ -17,6 +20,9 @@ function update(dt) { /* dt - time in seconds */
         if (asteroid.y > canvas.height) {
             asteroids.splice(i, 1);
             i--;
+            if (!flags.isGameOver) {
+                for (let k = 0; k < params.asteroidsReplaceCount; k++) generate.asteroid();
+            }
             continue;
         }
 
