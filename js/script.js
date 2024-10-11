@@ -40,6 +40,8 @@ async function preload() {
         { name: 'fire', src: 'fire.png' },
         { name: 'shield', src: 'shield.png' },
         { name: 'explosion', src: 'expl222.png' },
+        { name: 'heart', src: 'heart.png' },
+        { name: 'heartEmpty', src: 'heart_empty.png' },
     ]);
 
     function loadImages(images) {

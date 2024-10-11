@@ -9,6 +9,24 @@ function setParams() {
     function setShipParams() {
         ship.x = (canvas.width - I.ship.width) / 2;
         ship.y = (canvas.height - I.ship.height) / 2;
+        
+        {
+            ship.lifesCount = 3;
+            ship.lifes = [];
+    
+            const lifesBaseX = 5;
+            const lifesBaseY = 5;
+            const lifeWidth = 25;
+            const lifeHeight = 25;
+            const lifesGap = 5;
+    
+            for (let i = 0; i < ship.lifesCount; i++) {
+                const x = lifesBaseX + i * (lifeWidth + lifesGap);
+                const y = lifesBaseY;
+    
+                ship.lifes.push({ x, y, width: lifeWidth, height: lifeHeight });
+            }
+        }
     }
 
     function setFpsParams() {

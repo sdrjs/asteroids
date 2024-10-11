@@ -134,6 +134,9 @@ function update(dt) { /* dt - time in seconds */
             if (shieldParams.isActive) {
                 shieldParams.isActive = false;
                 shieldParams.destructionTime = timers.now;
+            } else if (ship.lifesCount > 0) {
+                ship.lifesCount--;
+                ship.lifes[ship.lifesCount].isEmpty = true;
             }
         }
     }

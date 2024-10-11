@@ -30,4 +30,10 @@ function render() {
         ctx[style] = FPS.styles[style];
     }
     ctx.fillText(`FPS: ${FPS.value}`, FPS.x, FPS.y);
+
+    for (let life of ship.lifes) {
+        const lifeIcon = life.isEmpty ? I.heartEmpty : I.heart;
+        
+        ctx.drawImage(lifeIcon, life.x, life.y, life.width, life.height);
+    }
 }
