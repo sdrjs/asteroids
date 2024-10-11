@@ -22,31 +22,10 @@ let cursorY;
 
 preload()
     .then(() => {
-        timers.dtCalculated = timers.generatedFires = Date.now();
-        timers.calcDt = function() {
-            const now = Date.now();
-            const dt = (now - timers.dtCalculated) / 1000;
-            timers.dtCalculated = now;
-
-            return dt;
-        }
-
-        FPS.lastMeasurement = timers.dtCalculated;
-        FPS.measurements = [];
-        FPS.value = 'xx';
-        FPS.updateTime = 700;
-        FPS.x = canvas.width - 5;
-        FPS.y = 5;
-        FPS.styles = {
-            fillStyle: 'white',
-            font: '15px sans-serif',
-            textAlign: 'right',
-            textBaseline: 'top',
-        };
-
         ship.x = (canvas.width - I.ship.width) / 2;
         ship.y = (canvas.height - I.ship.height) / 2;
 
+        setFpsParams();
         setExplosionParams();
         setShieldParams();
 
@@ -87,21 +66,24 @@ async function preload() {
 }
 
 function game() { // основной игровой цикл
-    const dt = timers.calcDt();
-    FPS.measurements.push(1 / dt);
-    
+    timers.now = Date.now();
+    const dt = timers.last ? (timers.now - timers.last) / 1000 : 0;
+    if (dt > 0) FPS.measurements.push(1 / dt);
+
     update(dt);
     render();
+
+    timers.last = timers.now;
     requestAnimationFrame(game);
 }
 
 function update(dt) { /* dt - time in seconds */
-    if (timers.dtCalculated >= FPS.lastMeasurement + FPS.updateTime) {
+    if (FPS.measurements.length && timers.now >= FPS.lastMeasurement + FPS.updateTime) {
         const fps = FPS.measurements.reduce((acc, current) => acc + current, 0) / FPS.measurements.length;
         FPS.value = Math.round(fps);
 
         FPS.measurements.length = 0;
-        FPS.lastMeasurement = timers.dtCalculated;
+        FPS.lastMeasurement = timers.now;
     }
 
     randomCall({ probability: 1.5 * dt, fn: generateAsteroid });
@@ -220,9 +202,10 @@ function update(dt) { /* dt - time in seconds */
         }
     }
 
-    if (timers.dtCalculated - timers.generatedFires > 670) {
+    if (!timers.generatedFires) timers.generatedFires = timers.now;
+    if (timers.now - timers.generatedFires > 670) {
         generateFires();
-        timers.generatedFires = timers.dtCalculated;
+        timers.generatedFires = timers.now;
     }
 }
 
@@ -346,4 +329,19 @@ function setShieldParams() {
     const height = I.ship.height * shieldParams.sizeY;
 
     shieldParams = { ...shieldParams, spriteWidth, spriteHeight, framesX, framesY, framesTotal, frame: 0, width, height };
+}
+
+function setFpsParams() {
+    FPS.lastMeasurement = null;
+    FPS.measurements = [];
+    FPS.value = 'xx';
+    FPS.updateTime = 700;
+    FPS.x = canvas.width - 5;
+    FPS.y = 5;
+    FPS.styles = {
+        fillStyle: 'white',
+        font: '15px sans-serif',
+        textAlign: 'right',
+        textBaseline: 'top',
+    };
 }
