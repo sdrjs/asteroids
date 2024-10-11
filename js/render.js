@@ -28,10 +28,12 @@ function render() {
         ctx.restore();
     }
 
-    for (let style in FPS.styles) {
-        ctx[style] = FPS.styles[style];
+    if (flags.showFPS) {
+        for (let style in FPS.styles) {
+            ctx[style] = FPS.styles[style];
+        }
+        ctx.fillText(`FPS: ${FPS.value}`, FPS.x, FPS.y);
     }
-    ctx.fillText(`FPS: ${FPS.value}`, FPS.x, FPS.y);
 
     for (let life of ship.lifes) {
         const lifeIcon = life.isEmpty ? I.heartEmpty : I.heart;
