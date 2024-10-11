@@ -202,6 +202,29 @@ function update(dt) { /* dt - time in seconds */
         }
     }
 
+    for (let i = 0; i < asteroids.length; i++) {
+        const asteroid = asteroids[i];
+    
+        if (checkIntersection({
+            obj1: { x: ship.x, y: ship.y, width: I.ship.width, height: I.ship.height }, 
+            obj2: { x: asteroid.x, y: asteroid.y, width: asteroid.width, height: asteroid.height },
+        })) {
+            asteroids.splice(i, 1);
+            i--;
+
+            const explosionWidth = asteroid.width * explosionParams.size;
+            const explosionHeight = asteroid.height * explosionParams.size;
+
+            const explosionCenterX = asteroid.x + asteroid.width / 2;
+            const explosionCenterY = asteroid.y + asteroid.height / 2;
+
+            const explosionX = explosionCenterX - explosionWidth / 2;
+            const explosionY = explosionCenterY - explosionHeight / 2;
+
+            explosions.push({ x: explosionX, y: explosionY, width: explosionWidth, height: explosionHeight, frame: 0, sx: 0, sy: 0 });
+        }
+    }
+
     if (!timers.generatedFires) timers.generatedFires = timers.now;
     if (timers.now - timers.generatedFires > 670) {
         generateFires();
