@@ -18,18 +18,14 @@ const generate = (() => {
     }
     
     function generateFires() {
-        const angleBetweenFires = 5;
-        const firesCount = 3; // max: 90 / angleBetweenFires
-        const maxDy = 300;
-    
-        const angles = getAngles(firesCount, angleBetweenFires);
+        const angles = getAngles(params.firesCount, params.angleBetweenFires);
     
         const x = ship.x + (I.ship.width - FIRE_SIZE) / 2;
         const y = ship.y + (I.ship.height - FIRE_SIZE) / 2;
     
         for (let angle of angles) {
-            const dx = calcDx(maxDy, angle);
-            const dy = calcDy(maxDy, dx) * -1;
+            const dx = calcDx(params.firesSpeed, angle);
+            const dy = calcDy(params.firesSpeed, dx) * -1;
     
             fires.push({ x, y, dx, dy });
         }
@@ -61,8 +57,8 @@ const generate = (() => {
     }
     
     function generateAsteroidExplosion(asteroid) {
-        const explosionWidth = asteroid.width * explosionParams.size;
-        const explosionHeight = asteroid.height * explosionParams.size;
+        const explosionWidth = asteroid.width * explosionParams.scale;
+        const explosionHeight = asteroid.height * explosionParams.scale;
     
         const explosionCenterX = asteroid.x + asteroid.width / 2;
         const explosionCenterY = asteroid.y + asteroid.height / 2;

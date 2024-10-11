@@ -11,10 +11,10 @@ function render() {
         ctx.drawImage(I.fire, fire.x, fire.y, FIRE_SIZE, FIRE_SIZE);
     }
 
-    if (!flags.isGameOver) {
+    if (!isGameOver) {
         ctx.drawImage(I.ship, ship.x, ship.y);
 
-        if (shieldParams.isActive) {
+        if (params.shieldActive) {
             ctx.drawImage(I.shield, shieldParams.sx, shieldParams.sy, shieldParams.sWidth, shieldParams.sHeight, shieldParams.x, shieldParams.y, shieldParams.width, shieldParams.height);
         }
     }
@@ -28,7 +28,7 @@ function render() {
         ctx.restore();
     }
 
-    if (flags.showFPS) {
+    if (params.showFPS) {
         for (let style in FPS.styles) {
             ctx[style] = FPS.styles[style];
         }
@@ -41,7 +41,7 @@ function render() {
         ctx.drawImage(lifeIcon, life.x, life.y, life.width, life.height);
     }
 
-    if (flags.isGameOver) {
+    if (isGameOver) {
         for (let style in gameOver.styles) {
             ctx[style] = gameOver.styles[style];
         }

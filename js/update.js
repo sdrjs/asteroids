@@ -9,7 +9,7 @@ function update(dt) { /* dt - time in seconds */
         FPS.lastMeasurement = timers.now;
     }
 
-    if (!flags.isGameOver) {
+    if (!isGameOver) {
         randomCall({ probability: params.asteroidsCount * dt, fn: generate.asteroid });
         params.asteroidsCount += params.asteroidsIncrease * dt;
     }
@@ -20,7 +20,7 @@ function update(dt) { /* dt - time in seconds */
         if (asteroid.y > canvas.height) {
             asteroids.splice(i, 1);
             i--;
-            if (!flags.isGameOver) {
+            if (!isGameOver) {
                 for (let k = 0; k < params.asteroidsReplaceCount; k++) generate.asteroid();
             }
             continue;
@@ -36,7 +36,7 @@ function update(dt) { /* dt - time in seconds */
         asteroid.centerY = asteroid.y + asteroid.height / 2;
     }
 
-    if (!flags.isGameOver && cursorX) {
+    if (!isGameOver && cursorX) {
         let shipX = cursorX - I.ship.width / 2;
         let shipY = cursorY - I.ship.height / 2;
 
@@ -69,10 +69,10 @@ function update(dt) { /* dt - time in seconds */
         expl.sy = frameY * explosionParams.sHeight;
     }
 
-    if (shieldParams.isActive === false && timers.now > shieldParams.destructionTime + shieldParams.regenerationTime) {
-        shieldParams.isActive = true;
+    if (params.shieldActive === false && timers.now > shieldParams.destructionTime + params.shieldRegenerationTime) {
+        params.shieldActive = true;
     }
-    if (shieldParams.isActive) {
+    if (params.shieldActive) {
         shieldParams.frame += shieldParams.framesPerSecond * dt;
         const shieldFrame = Math.floor(shieldParams.frame % shieldParams.framesTotal);
     
@@ -125,7 +125,7 @@ function update(dt) { /* dt - time in seconds */
         }
     }
 
-    if (!flags.isGameOver) {
+    if (!isGameOver) {
         for (let i = 0; i < asteroids.length; i++) {
             const asteroid = asteroids[i];
         
@@ -138,14 +138,14 @@ function update(dt) { /* dt - time in seconds */
     
                 generate.asteroidExplosion(asteroid);
     
-                if (shieldParams.isActive) {
-                    shieldParams.isActive = false;
+                if (params.shieldActive) {
+                    params.shieldActive = false;
                     shieldParams.destructionTime = timers.now;
-                } else if (ship.lifesCount > 0) {
-                    ship.lifesCount--;
-                    ship.lifes[ship.lifesCount].isEmpty = true;
+                } else if (params.lifesCount > 0) {
+                    params.lifesCount--;
+                    ship.lifes[params.lifesCount].isEmpty = true;
     
-                    if (ship.lifesCount === 0) {
+                    if (params.lifesCount === 0) {
                         finishGame();
                     }
                 }
@@ -153,9 +153,9 @@ function update(dt) { /* dt - time in seconds */
         }
     }
 
-    if (!flags.isGameOver) {
+    if (!isGameOver) {
         if (!timers.generatedFires) timers.generatedFires = timers.now;
-        if (timers.now - timers.generatedFires > 670) {
+        if (timers.now - timers.generatedFires > params.firesInterval) {
             generate.fires();
             timers.generatedFires = timers.now;
         }

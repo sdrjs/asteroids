@@ -1,6 +1,17 @@
 'use strict';
 
 function setParams() {
+    params.showFPS = false;
+
+    params.lifesCount = 3;
+    params.shieldRegenerationTime = 5000;
+    params.shieldActive = true;
+
+    params.angleBetweenFires = 5;
+    params.firesCount = 3; // max: 90 / angleBetweenFires
+    params.firesInterval = 670;
+    params.firesSpeed = 300;
+    
     params.asteroidsReplaceCount = 3;
     params.asteroidsCount = 1.5;
     params.asteroidsIncrease = 0.05;
@@ -18,7 +29,6 @@ function setParams() {
         ship.explosionScale = 3;
         
         {
-            ship.lifesCount = 3;
             ship.lifes = [];
     
             const lifesBaseX = 5;
@@ -27,7 +37,7 @@ function setParams() {
             const lifeHeight = 25;
             const lifesGap = 5;
     
-            for (let i = 0; i < ship.lifesCount; i++) {
+            for (let i = 0; i < params.lifesCount; i++) {
                 const x = lifesBaseX + i * (lifeWidth + lifesGap);
                 const y = lifesBaseY;
     
@@ -64,9 +74,6 @@ function setParams() {
     }
     
     function setShieldParams() {
-        const isActive = true;
-        const regenerationTime = 5000;
-
         const spriteWidth = I.shield.width;
         const spriteHeight = I.shield.height;
     
@@ -75,10 +82,10 @@ function setParams() {
     
         const framesTotal = framesX * framesY;
     
-        const width = I.ship.width * shieldParams.sizeX;
-        const height = I.ship.height * shieldParams.sizeY;
+        const width = I.ship.width * shieldParams.scaleX;
+        const height = I.ship.height * shieldParams.scaleY;
     
-        shieldParams = { ...shieldParams, isActive, regenerationTime, spriteWidth, spriteHeight, framesX, framesY, framesTotal, frame: 0, width, height };
+        shieldParams = { ...shieldParams, spriteWidth, spriteHeight, framesX, framesY, framesTotal, frame: 0, width, height };
     }
 
     function setGameOverParams() {
