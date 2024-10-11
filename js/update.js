@@ -63,7 +63,10 @@ function update(dt) { /* dt - time in seconds */
         expl.sy = frameY * explosionParams.sHeight;
     }
 
-    {
+    if (shieldParams.isActive === false && timers.now > shieldParams.destructionTime + shieldParams.regenerationTime) {
+        shieldParams.isActive = true;
+    }
+    if (shieldParams.isActive) {
         shieldParams.frame += shieldParams.framesPerSecond * dt;
         const shieldFrame = Math.floor(shieldParams.frame % shieldParams.framesTotal);
     
@@ -127,6 +130,11 @@ function update(dt) { /* dt - time in seconds */
             i--;
 
             generate.asteroidExplosion(asteroid);
+
+            if (shieldParams.isActive) {
+                shieldParams.isActive = false;
+                shieldParams.destructionTime = timers.now;
+            }
         }
     }
 

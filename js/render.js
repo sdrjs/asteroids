@@ -12,7 +12,10 @@ function render() {
     }
 
     ctx.drawImage(I.ship, ship.x, ship.y);
-    ctx.drawImage(I.shield, shieldParams.sx, shieldParams.sy, shieldParams.sWidth, shieldParams.sHeight, shieldParams.x, shieldParams.y, shieldParams.width, shieldParams.height);
+    
+    if (shieldParams.isActive) {
+        ctx.drawImage(I.shield, shieldParams.sx, shieldParams.sy, shieldParams.sWidth, shieldParams.sHeight, shieldParams.x, shieldParams.y, shieldParams.width, shieldParams.height);
+    }
 
     for (let asteroid of asteroids) {
         ctx.save();

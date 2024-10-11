@@ -39,6 +39,9 @@ function setParams() {
     }
     
     function setShieldParams() {
+        const isActive = true;
+        const regenerationTime = 5000;
+
         const spriteWidth = I.shield.width;
         const spriteHeight = I.shield.height;
     
@@ -50,6 +53,6 @@ function setParams() {
         const width = I.ship.width * shieldParams.sizeX;
         const height = I.ship.height * shieldParams.sizeY;
     
-        shieldParams = { ...shieldParams, spriteWidth, spriteHeight, framesX, framesY, framesTotal, frame: 0, width, height };
+        shieldParams = { ...shieldParams, isActive, regenerationTime, spriteWidth, spriteHeight, framesX, framesY, framesTotal, frame: 0, width, height };
     }
 }
