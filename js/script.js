@@ -10,6 +10,7 @@ const fires = [];
 const explosions = [];
 
 const timers = {};
+const FPS = {};
 
 let explosionParams = { sWidth: 128, sHeight: 128, framesPerSecond: 42, size: 1.5 };
 let shieldParams = { sWidth: 192, sHeight: 192, framesPerSecond: 60, offsetY: 7, sizeX: 2, sizeY: 2.5 };
@@ -29,6 +30,19 @@ preload()
 
             return dt;
         }
+
+        FPS.lastMeasurement = timers.dtCalculated;
+        FPS.measurements = [];
+        FPS.value = 'xx';
+        FPS.updateTime = 700;
+        FPS.x = canvas.width - 5;
+        FPS.y = 5;
+        FPS.styles = {
+            fillStyle: 'white',
+            font: '15px sans-serif',
+            textAlign: 'right',
+            textBaseline: 'top',
+        };
 
         ship.x = (canvas.width - I.ship.width) / 2;
         ship.y = (canvas.height - I.ship.height) / 2;
@@ -74,6 +88,7 @@ async function preload() {
 
 function game() { // основной игровой цикл
     const dt = timers.calcDt();
+    FPS.measurements.push(1 / dt);
     
     update(dt);
     render();
@@ -81,6 +96,14 @@ function game() { // основной игровой цикл
 }
 
 function update(dt) { /* dt - time in seconds */
+    if (timers.dtCalculated >= FPS.lastMeasurement + FPS.updateTime) {
+        const fps = FPS.measurements.reduce((acc, current) => acc + current, 0) / FPS.measurements.length;
+        FPS.value = Math.round(fps);
+
+        FPS.measurements.length = 0;
+        FPS.lastMeasurement = timers.dtCalculated;
+    }
+
     randomCall({ probability: 1.5 * dt, fn: generateAsteroid });
 
     for (let i = 0; i < asteroids.length; i++) {
@@ -225,6 +248,11 @@ function render() {
         ctx.drawImage(I.asteroid, asteroid.x, asteroid.y, asteroid.width, asteroid.height);
         ctx.restore();
     }
+
+    for (let style in FPS.styles) {
+        ctx[style] = FPS.styles[style];
+    }
+    ctx.fillText(`FPS: ${FPS.value}`, FPS.x, FPS.y);
 }
 
 function generateAsteroid() {
