@@ -96,6 +96,10 @@ function update(dt) { /* dt - time in seconds */
 
         asteroid.x += asteroid.dx * dt;
         asteroid.y += asteroid.dy * dt;
+        asteroid.currentRotation += asteroid.angle * dt;
+        
+        asteroid.centerX = asteroid.x + asteroid.width / 2;
+        asteroid.centerY = asteroid.y + asteroid.height / 2;
     }
 
     if (cursorX) {
@@ -214,7 +218,12 @@ function render() {
     ctx.drawImage(I.shield, shieldParams.sx, shieldParams.sy, shieldParams.sWidth, shieldParams.sHeight, shieldParams.x, shieldParams.y, shieldParams.width, shieldParams.height);
 
     for (let asteroid of asteroids) {
+        ctx.save();
+        ctx.translate(asteroid.centerX, asteroid.centerY);
+        ctx.rotate(degToRad(asteroid.currentRotation));
+        ctx.translate(-asteroid.centerX, -asteroid.centerY);
         ctx.drawImage(I.asteroid, asteroid.x, asteroid.y, asteroid.width, asteroid.height);
+        ctx.restore();
     }
 }
 
@@ -228,7 +237,10 @@ function generateAsteroid() {
     const dx = getRandomNumber({ max: 90, withOppositeSign: true });
     const dy = getRandomNumber({ min: 42, max: 132 });
 
-    asteroids.push({ x, y, dx, dy, width, height });
+    const angle = getRandomNumber({ max: 250, withOppositeSign: true });
+    const currentRotation = getRandomNumber({ max: 180, withOppositeSign: true });
+
+    asteroids.push({ x, y, dx, dy, width, height, angle, currentRotation });
 }
 
 function generateFires() {
