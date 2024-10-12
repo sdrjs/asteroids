@@ -1,5 +1,6 @@
 'use strict';
 
+const wrapper = document.querySelector('.wrapper');
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
 
@@ -24,6 +25,9 @@ let cursorX;
 let cursorY;
 
 const styles = {};
+
+setCssScale();
+window.addEventListener('resize', setCssScale);
 
 document.addEventListener('keydown', function(e) {
     if (e.code === 'KeyF') {
@@ -128,4 +132,10 @@ function finishGame() {
     cursorX = cursorY = null;
     
     setTimeout(startGame, 5000);
+}
+
+function setCssScale(e) {
+    const wrapperWidth = parseInt(getComputedStyle(wrapper).width);
+
+    document.documentElement.style.setProperty('--scale', wrapperWidth / canvas.width);
 }
