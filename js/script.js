@@ -12,8 +12,6 @@ const explosions = [];
 
 const timers = {};
 const FPS = {};
-const gameOver = {};
-const pause = {};
 
 let explosionParams = { sWidth: 128, sHeight: 128, framesPerSecond: 42, scale: 1.5 };
 let shieldParams = { sWidth: 192, sHeight: 192, framesPerSecond: 60, offsetY: 7, scaleX: 2, scaleY: 2.5 };
@@ -24,6 +22,8 @@ let isPaused = document.hidden;
 let isGameOver = false;
 let cursorX;
 let cursorY;
+
+const styles = {};
 
 document.addEventListener('keydown', function(e) {
     if (e.code === 'KeyF') {
@@ -53,8 +53,9 @@ canvas.addEventListener('click', function(e) {
 });
 
 preload()
+    .then(setStyles)
     .then(startGame)
-    .then(game);
+    .then(main);
 
 async function preload() {
     await loadImages([
@@ -86,7 +87,7 @@ async function preload() {
     }
 }
 
-function game() { // основной игровой цикл
+function main() {
     timers.now = Date.now();
     if (isPaused) timers.last = null;
     const dt = timers.last ? (timers.now - timers.last) / 1000 : 0;
@@ -96,7 +97,7 @@ function game() { // основной игровой цикл
     render();
 
     timers.last = timers.now;
-    requestAnimationFrame(game);
+    requestAnimationFrame(main);
 }
 
 function updateCursorPosition(e) {

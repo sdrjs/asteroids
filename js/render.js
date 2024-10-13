@@ -11,14 +11,6 @@ function render() {
         ctx.drawImage(I.fire, fire.x, fire.y, FIRE_SIZE, FIRE_SIZE);
     }
 
-    if (!isGameOver) {
-        ctx.drawImage(I.ship, ship.x, ship.y);
-
-        if (params.shieldActive) {
-            ctx.drawImage(I.shield, shieldParams.sx, shieldParams.sy, shieldParams.sWidth, shieldParams.sHeight, shieldParams.x, shieldParams.y, shieldParams.width, shieldParams.height);
-        }
-    }
-
     for (let asteroid of asteroids) {
         ctx.save();
         ctx.translate(asteroid.centerX, asteroid.centerY);
@@ -28,11 +20,12 @@ function render() {
         ctx.restore();
     }
 
-    if (params.showFPS) {
-        for (let style in FPS.styles) {
-            ctx[style] = FPS.styles[style];
+    if (!isGameOver) {
+        ctx.drawImage(I.ship, ship.x, ship.y);
+
+        if (params.shieldActive) {
+            ctx.drawImage(I.shield, shieldParams.sx, shieldParams.sy, shieldParams.sWidth, shieldParams.sHeight, shieldParams.x, shieldParams.y, shieldParams.width, shieldParams.height);
         }
-        ctx.fillText(`FPS: ${FPS.value}`, FPS.x, FPS.y);
     }
 
     for (let life of ship.lifes) {
@@ -41,17 +34,24 @@ function render() {
         ctx.drawImage(lifeIcon, life.x, life.y, life.width, life.height);
     }
 
-    if (isGameOver) {
-        for (let style in gameOver.styles) {
-            ctx[style] = gameOver.styles[style];
+    if (params.showFPS) {
+        for (let style in FPS.styles) {
+            ctx[style] = FPS.styles[style];
         }
-        ctx.fillText(gameOver.text, gameOver.x, gameOver.y);
+        ctx.fillText(`FPS: ${FPS.value}`, FPS.x, FPS.y);
+    }
+
+    if (isGameOver) {
+        for (let style in styles.gameOver.styles) {
+            ctx[style] = styles.gameOver.styles[style];
+        }
+        ctx.fillText(styles.gameOver.text, styles.gameOver.x, styles.gameOver.y);
     }
 
     if (isPaused) {
-        for (let style in pause.styles) {
-            ctx[style] = pause.styles[style];
+        for (let style in styles.pause.styles) {
+            ctx[style] = styles.pause.styles[style];
         }
-        ctx.fillText(pause.text, pause.x, pause.y);
+        ctx.fillText(styles.pause.text, styles.pause.x, styles.pause.y);
     }
 }

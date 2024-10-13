@@ -20,8 +20,6 @@ function setParams() {
     setFpsParams();
     setExplosionParams();
     setShieldParams();
-    setGameOverParams();
-    setPauseParams();
 
     function setShipParams() {
         ship.x = (canvas.width - I.ship.width) / 2;
@@ -31,6 +29,7 @@ function setParams() {
         
         {
             ship.lifes = [];
+            ship.lifesCount = params.lifesCount;
     
             const lifesBaseX = 5;
             const lifesBaseY = 5;
@@ -38,7 +37,7 @@ function setParams() {
             const lifeHeight = 25;
             const lifesGap = 5;
     
-            for (let i = 0; i < params.lifesCount; i++) {
+            for (let i = 0; i < ship.lifesCount; i++) {
                 const x = lifesBaseX + i * (lifeWidth + lifesGap);
                 const y = lifesBaseY;
     
@@ -87,33 +86,5 @@ function setParams() {
         const height = I.ship.height * shieldParams.scaleY;
     
         shieldParams = { ...shieldParams, spriteWidth, spriteHeight, framesX, framesY, framesTotal, frame: 0, width, height };
-    }
-
-    function setGameOverParams() {
-        gameOver.text = 'GAME OVER';
-
-        gameOver.x = canvas.width / 2;
-        gameOver.y = canvas.height / 2;
-
-        gameOver.styles = {
-            fillStyle: 'white',
-            font: '40px sans-serif',
-            textAlign: 'center',
-            textBaseline: 'middle',
-        };
-    }
-
-    function setPauseParams() {
-        pause.text = '❚❚';
-
-        pause.x = canvas.width / 2;
-        pause.y = canvas.height / 2;
-
-        pause.styles = {
-            fillStyle: '#a6c9cd',
-            font: '70px sans-serif',
-            textAlign: 'center',
-            textBaseline: 'middle',
-        };
     }
 }

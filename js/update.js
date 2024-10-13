@@ -145,11 +145,11 @@ function update(dt) { /* dt - time in seconds */
                 if (params.shieldActive) {
                     params.shieldActive = false;
                     timers.shieldDestroyed = 0;
-                } else if (params.lifesCount > 0) {
-                    params.lifesCount--;
-                    ship.lifes[params.lifesCount].isEmpty = true;
+                } else if (ship.lifesCount > 0) {
+                    ship.lifesCount--;
+                    ship.lifes[ship.lifesCount].isEmpty = true;
     
-                    if (params.lifesCount === 0) {
+                    if (ship.lifesCount === 0) {
                         finishGame();
                     }
                 }
