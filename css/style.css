@@ -12,3 +12,7 @@ body {
 #game:hover {
 	cursor: none;
 }
+
+#game.pause {
+	cursor: pointer;
+}

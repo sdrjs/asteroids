@@ -47,4 +47,11 @@ function render() {
         }
         ctx.fillText(gameOver.text, gameOver.x, gameOver.y);
     }
+
+    if (isPaused) {
+        for (let style in pause.styles) {
+            ctx[style] = pause.styles[style];
+        }
+        ctx.fillText(pause.text, pause.x, pause.y);
+    }
 }

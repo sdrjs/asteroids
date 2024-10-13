@@ -21,6 +21,7 @@ function setParams() {
     setExplosionParams();
     setShieldParams();
     setGameOverParams();
+    setPauseParams();
 
     function setShipParams() {
         ship.x = (canvas.width - I.ship.width) / 2;
@@ -97,6 +98,20 @@ function setParams() {
         gameOver.styles = {
             fillStyle: 'white',
             font: '40px sans-serif',
+            textAlign: 'center',
+            textBaseline: 'middle',
+        };
+    }
+
+    function setPauseParams() {
+        pause.text = '❚❚';
+
+        pause.x = canvas.width / 2;
+        pause.y = canvas.height / 2;
+
+        pause.styles = {
+            fillStyle: '#a6c9cd',
+            font: '70px sans-serif',
             textAlign: 'center',
             textBaseline: 'middle',
         };

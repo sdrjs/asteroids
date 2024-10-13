@@ -13,12 +13,14 @@ const explosions = [];
 const timers = {};
 const FPS = {};
 const gameOver = {};
+const pause = {};
 
 let explosionParams = { sWidth: 128, sHeight: 128, framesPerSecond: 42, scale: 1.5 };
 let shieldParams = { sWidth: 192, sHeight: 192, framesPerSecond: 60, offsetY: 7, scaleX: 2, scaleY: 2.5 };
 
 const FIRE_SIZE = 30;
 
+let isPaused = document.hidden;
 let isGameOver = false;
 let cursorX;
 let cursorY;
@@ -26,6 +28,27 @@ let cursorY;
 document.addEventListener('keydown', function(e) {
     if (e.code === 'KeyF') {
         params.showFPS = !params.showFPS;
+    }
+
+    if (e.code === 'KeyP') {
+        if (!isGameOver) {
+            isPaused = !isPaused;
+            canvas.classList.toggle('pause');
+        }
+    }
+});
+
+document.addEventListener('visibilitychange', function() {
+    if (document.hidden && !isPaused) {
+        isPaused = true;
+        canvas.classList.add('pause');
+    }
+});
+
+canvas.addEventListener('click', function(e) {
+    if (isPaused) {
+        isPaused = false;
+        canvas.classList.remove('pause');
     }
 });
 
@@ -65,6 +88,7 @@ async function preload() {
 
 function game() { // основной игровой цикл
     timers.now = Date.now();
+    if (isPaused) timers.last = null;
     const dt = timers.last ? (timers.now - timers.last) / 1000 : 0;
     if (dt > 0) FPS.measurements.push(1 / dt);
 

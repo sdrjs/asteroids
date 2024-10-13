@@ -36,7 +36,7 @@ function update(dt) { /* dt - time in seconds */
         asteroid.centerY = asteroid.y + asteroid.height / 2;
     }
 
-    if (!isGameOver && cursorX) {
+    if (!isGameOver && !isPaused && cursorX) {
         let shipX = cursorX - I.ship.width / 2;
         let shipY = cursorY - I.ship.height / 2;
 
@@ -157,7 +157,7 @@ function update(dt) { /* dt - time in seconds */
         }
     }
 
-    if (!isGameOver) {
+    if (!isGameOver && !isPaused) {
         if (!timers.generatedFires) timers.generatedFires = 0;
 
         timers.generatedFires += 1000 * dt;
