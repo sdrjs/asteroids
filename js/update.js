@@ -69,8 +69,12 @@ function update(dt) { /* dt - time in seconds */
         expl.sy = frameY * explosionParams.sHeight;
     }
 
-    if (params.shieldActive === false && timers.now > shieldParams.destructionTime + params.shieldRegenerationTime) {
-        params.shieldActive = true;
+    if (params.shieldActive === false) {
+        if (timers.shieldDestroyed >= params.shieldRegenerationTime) {
+            params.shieldActive = true;
+        } else {
+            timers.shieldDestroyed += 1000 * dt;
+        }
     }
     if (params.shieldActive) {
         shieldParams.frame += shieldParams.framesPerSecond * dt;
@@ -140,7 +144,7 @@ function update(dt) { /* dt - time in seconds */
     
                 if (params.shieldActive) {
                     params.shieldActive = false;
-                    shieldParams.destructionTime = timers.now;
+                    timers.shieldDestroyed = 0;
                 } else if (params.lifesCount > 0) {
                     params.lifesCount--;
                     ship.lifes[params.lifesCount].isEmpty = true;
@@ -154,10 +158,13 @@ function update(dt) { /* dt - time in seconds */
     }
 
     if (!isGameOver) {
-        if (!timers.generatedFires) timers.generatedFires = timers.now;
-        if (timers.now - timers.generatedFires > params.firesInterval) {
+        if (!timers.generatedFires) timers.generatedFires = 0;
+
+        timers.generatedFires += 1000 * dt;
+
+        if (timers.generatedFires >= params.firesInterval) {
             generate.fires();
-            timers.generatedFires = timers.now;
+            timers.generatedFires = 0;
         }
     }
 }
