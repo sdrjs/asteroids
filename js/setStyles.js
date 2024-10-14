@@ -3,6 +3,7 @@
 function setStyles() {
     styles.gameOver = new GameOverStyles();
     styles.pause = new PauseStyles();
+    styles.shieldPanel = new ShieldPanelStyles();
 
     function GameOverStyles() {
         this.text = 'GAME OVER';
@@ -30,5 +31,17 @@ function setStyles() {
             textAlign: 'center',
             textBaseline: 'middle',
         };
+    }
+
+    function ShieldPanelStyles() {
+        this.text = {
+            fillStyle: 'white',
+            font: '15px sans-serif',
+            textAlign: 'center',
+            textBaseline: 'middle',
+        }
+
+        this.bgColor = 'rgba(0, 127, 188)';
+        this.borderColor = 'white';
     }
 }

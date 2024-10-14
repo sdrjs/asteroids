@@ -74,6 +74,10 @@ function update(dt) { /* dt - time in seconds */
             params.shieldActive = true;
         } else {
             timers.shieldDestroyed += 1000 * dt;
+
+            ship.shieldPanel.currentHeight = timers.shieldDestroyed / params.shieldRegenerationTime * ship.shieldPanel.height;
+            ship.shieldPanel.currentY = ship.shieldPanel.baseY + ship.shieldPanel.height - ship.shieldPanel.currentHeight;
+            ship.shieldPanel.text = (Math.abs(params.shieldRegenerationTime - timers.shieldDestroyed) / 1000).toFixed(1);
         }
     }
     if (params.shieldActive) {

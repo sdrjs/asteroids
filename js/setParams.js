@@ -43,6 +43,20 @@ function setParams() {
     
                 ship.lifes.push({ x, y, width: lifeWidth, height: lifeHeight });
             }
+
+            ship.shieldPanel = new ShieldPanel();
+
+            function ShieldPanel() {
+                this.offsetX = 20;
+                this.baseX = lifesBaseX + ship.lifesCount * (lifeWidth + lifesGap) - lifesGap + this.offsetX;
+                this.baseY = lifesBaseY;
+                this.width = 30;
+                this.height = 22;
+
+                this.centerX = this.baseX + this.width / 2;
+                this.textY = this.baseY + this.height / 2 + 2;
+                this.text = '';
+            }
         }
     }
 

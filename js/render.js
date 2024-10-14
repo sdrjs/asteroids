@@ -25,6 +25,17 @@ function render() {
 
         if (params.shieldActive) {
             ctx.drawImage(I.shield, shieldParams.sx, shieldParams.sy, shieldParams.sWidth, shieldParams.sHeight, shieldParams.x, shieldParams.y, shieldParams.width, shieldParams.height);
+        } else {
+            ctx.strokeStyle = styles.shieldPanel.borderColor;
+            ctx.strokeRect(ship.shieldPanel.baseX, ship.shieldPanel.baseY, ship.shieldPanel.width, ship.shieldPanel.height);
+    
+            ctx.fillStyle = styles.shieldPanel.bgColor;
+            ctx.fillRect(ship.shieldPanel.baseX, ship.shieldPanel.currentY, ship.shieldPanel.width, ship.shieldPanel.currentHeight);
+    
+            for (let style in styles.shieldPanel.text) {
+                ctx[style] = styles.shieldPanel.text[style];
+            }
+            ctx.fillText(ship.shieldPanel.text, ship.shieldPanel.centerX, ship.shieldPanel.textY);
         }
     }
 
