@@ -124,10 +124,14 @@ function update(dt) { /* dt - time in seconds */
                 contactArea: asteroid.width / 5,
             })) {
                 fires.splice(i, 1);
-                asteroids.splice(j, 1);
                 i--;
+                asteroid.lifes--;
 
-                generate.asteroidExplosion(asteroid);
+                if (asteroid.lifes <= 0) {
+                    asteroids.splice(j, 1);
+                    generate.asteroidExplosion(asteroid);
+                }
+
                 break;
             }
         }

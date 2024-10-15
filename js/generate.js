@@ -1,20 +1,43 @@
 'use strict';
 
 const generate = (() => {
-    function generateAsteroid() {
-        const width = getRandomInteger({ min: 40, max: 60 });
+    const asteroidsSetup = {
+        1: {
+            lifes: 1,
+            maxDx: 125,
+            maxDy: 125,
+            size: 40,
+        },
+        2: {
+            lifes: 5,
+            maxDx: 60,
+            maxDy: 60,
+            size: 57,
+        },
+        3: {
+            lifes: 25,
+            maxDx: 25,
+            maxDy: 25,
+            size: 85,
+        },
+    };
+
+    function generateAsteroid({ size = 1 } = {}) {
+        const setup = asteroidsSetup[size];
+
+        const width = getRandomInteger({ min: setup.size, max: setup.size + 5 });
         const height = width;
     
         const x = getRandomInteger({ max: canvas.width - width });
         const y = -height;
     
-        const dx = getRandomNumber({ max: 90, withOppositeSign: true });
-        const dy = getRandomNumber({ min: 42, max: 132 });
+        const dx = getRandomNumber({ max: setup.maxDx, withOppositeSign: true });
+        const dy = getRandomNumber({ min: setup.maxDy * 0.7, max: setup.maxDy });
     
         const angle = getRandomNumber({ max: 250, withOppositeSign: true });
         const currentRotation = getRandomNumber({ max: 180, withOppositeSign: true });
     
-        asteroids.push({ x, y, dx, dy, width, height, angle, currentRotation });
+        asteroids.push({ x, y, dx, dy, width, height, angle, currentRotation, lifes: setup.lifes });
     }
     
     function generateFires() {
