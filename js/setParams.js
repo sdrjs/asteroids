@@ -12,9 +12,8 @@ function setParams() {
     params.firesInterval = 670;
     params.firesSpeed = 300;
     
-    params.asteroidsReplaceCount = 3;
-    params.asteroidsCount = 1.5;
-    params.asteroidsIncrease = 0.05;
+    params.asteroidsProbability = 0.5;
+    params.asteroidsIncrease = 0.02;
 
     setShipParams();
     setFpsParams();

@@ -10,8 +10,10 @@ function update(dt) { /* dt - time in seconds */
     }
 
     if (!isGameOver) {
-        randomCall({ probability: params.asteroidsCount * dt, fn: generate.asteroid });
-        params.asteroidsCount += params.asteroidsIncrease * dt;
+        randomCall({ probability: params.asteroidsProbability * dt, fn: () => generate.asteroid({ size: 1 }) });
+        randomCall({ probability: params.asteroidsProbability / 4 * dt, fn: () => generate.asteroid({ size: 2 }) });
+        randomCall({ probability: params.asteroidsProbability / 15 * dt, fn: () => generate.asteroid({ size: 3 }) });
+        params.asteroidsProbability += params.asteroidsIncrease * dt;
     }
 
     for (let i = 0; i < asteroids.length; i++) {
@@ -21,7 +23,7 @@ function update(dt) { /* dt - time in seconds */
             asteroids.splice(i, 1);
             i--;
             if (!isGameOver) {
-                for (let k = 0; k < params.asteroidsReplaceCount; k++) generate.asteroid();
+                for (let k = 0; k < asteroid.lifes; k++) generate.asteroid({ size: 1 });
             }
             continue;
         }
