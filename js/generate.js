@@ -41,6 +41,8 @@ const generate = (() => {
     }
     
     function generateFires() {
+        sounds.shot();
+
         const angles = getAngles(params.firesCount, params.angleBetweenFires);
     
         const x = ship.x + (I.ship.width - FIRE_SIZE) / 2;
@@ -80,6 +82,8 @@ const generate = (() => {
     }
     
     function generateAsteroidExplosion(asteroid) {
+        sounds.explode();
+        
         const explosionWidth = asteroid.width * explosionParams.scale;
         const explosionHeight = asteroid.height * explosionParams.scale;
     
@@ -93,6 +97,8 @@ const generate = (() => {
     }
 
     function generateShipExplosion() {
+        sounds.death();
+
         const explosionWidth = Math.max(I.ship.width, I.ship.height) * ship.explosionScale;
         const explosionHeight = Math.max(I.ship.width, I.ship.height) * ship.explosionScale;
     
