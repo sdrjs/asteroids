@@ -9,7 +9,7 @@ function update(dt) { /* dt - time in seconds */
         FPS.lastMeasurement = timers.now;
     }
 
-    if (!isGameOver) {
+    if (state === 'playing') {
         randomCall({ probability: params.asteroidsProbability * dt, fn: () => generate.asteroid({ size: 1 }) });
         randomCall({ probability: params.asteroidsProbability / 4 * dt, fn: () => generate.asteroid({ size: 2 }) });
         randomCall({ probability: params.asteroidsProbability / 15 * dt, fn: () => generate.asteroid({ size: 3 }) });
@@ -22,7 +22,7 @@ function update(dt) { /* dt - time in seconds */
         if (asteroid.y > canvas.height) {
             asteroids.splice(i, 1);
             i--;
-            if (!isGameOver) {
+            if (state === 'playing') {
                 for (let k = 0; k < asteroid.lifes; k++) generate.asteroid({ size: 1 });
             }
             continue;
@@ -38,7 +38,7 @@ function update(dt) { /* dt - time in seconds */
         asteroid.centerY = asteroid.y + asteroid.height / 2;
     }
 
-    if (!isGameOver && !isPaused && cursorX) {
+    if (state === 'playing' && cursorX) {
         let shipX = cursorX - I.ship.width / 2;
         let shipY = cursorY - I.ship.height / 2;
 
@@ -139,7 +139,7 @@ function update(dt) { /* dt - time in seconds */
         }
     }
 
-    if (!isGameOver) {
+    if (state === 'playing') {
         for (let i = 0; i < asteroids.length; i++) {
             const asteroid = asteroids[i];
         
@@ -160,14 +160,14 @@ function update(dt) { /* dt - time in seconds */
                     ship.lifes[ship.lifesCount].isEmpty = true;
     
                     if (ship.lifesCount === 0) {
-                        finishGame();
+                        setState('gameOver');
                     }
                 }
             }
         }
     }
 
-    if (!isGameOver && !isPaused) {
+    if (state === 'playing') {
         if (!timers.generatedFires) timers.generatedFires = 0;
 
         timers.generatedFires += 1000 * dt;

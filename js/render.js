@@ -20,7 +20,7 @@ function render() {
         ctx.restore();
     }
 
-    if (!isGameOver) {
+    if (state === 'playing' || state === 'paused') {
         ctx.drawImage(I.ship, ship.x, ship.y);
 
         if (params.shieldActive) {
@@ -39,10 +39,12 @@ function render() {
         }
     }
 
-    for (let life of ship.lifes) {
-        const lifeIcon = life.isEmpty ? I.heartEmpty : I.heart;
-        
-        ctx.drawImage(lifeIcon, life.x, life.y, life.width, life.height);
+    if (state === 'playing' || state === 'paused' || state === 'gameOver') {
+        for (let life of ship.lifes) {
+            const lifeIcon = life.isEmpty ? I.heartEmpty : I.heart;
+            
+            ctx.drawImage(lifeIcon, life.x, life.y, life.width, life.height);
+        }
     }
 
     if (params.showFPS) {
@@ -52,14 +54,14 @@ function render() {
         ctx.fillText(`FPS: ${FPS.value}`, FPS.x, FPS.y);
     }
 
-    if (isGameOver) {
+    if (state === 'gameOver') {
         for (let style in styles.gameOver.styles) {
             ctx[style] = styles.gameOver.styles[style];
         }
         ctx.fillText(styles.gameOver.text, styles.gameOver.x, styles.gameOver.y);
     }
 
-    if (isPaused) {
+    if (state === 'paused') {
         for (let style in styles.pause.styles) {
             ctx[style] = styles.pause.styles[style];
         }

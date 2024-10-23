@@ -39,6 +39,6 @@ body {
 	cursor: none;
 }
 
-#game.pause {
+#game.inactive {
 	cursor: pointer;
 }
