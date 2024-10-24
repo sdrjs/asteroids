@@ -3,16 +3,20 @@
 }
 
 body {
-	background: darkslategray;
+	display: grid;
+	place-items: center;
+	min-height: 100vh;
+	min-height: 100svh;
+
 	padding: 0;
 	margin: 0;
 	touch-action: none;
+	background: darkslategray;
 }
 
 .wrapper {
 	display: grid;
 	place-items: center;
-	margin: 0 auto;
 	max-width: 600px;
 }
 
@@ -27,6 +31,9 @@ body {
 	.wrapper {
 		height: 100vh;
 		width: 100vh;
+
+		height: 100svh;
+		width: 100svh;
 	}
 }
 
