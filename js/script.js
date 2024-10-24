@@ -43,7 +43,14 @@ function setCssScale() {
 async function preload() {
     setState('loading');
 
-    await loadImages([
+    const promises = [];
+
+    loadFonts([
+        'madeCanvas.otf',
+        'salmapro.otf',
+    ]);
+
+    loadImages([
         { name: 'bg', src: 'fon.png' },
         { name: 'asteroid', src: 'astero.png' },
         { name: 'ship', src: 'ship01.png' },
@@ -54,9 +61,9 @@ async function preload() {
         { name: 'heartEmpty', src: 'heart_empty.png' },
     ]);
 
+    await Promise.all(promises);
+
     function loadImages(images) {
-        const promises = [];
-    
         for (const image of images) {
             I[image.name] = new Image();
             I[image.name].src = `img/${image.src}`;
@@ -67,8 +74,22 @@ async function preload() {
     
             promises.push(promiseFn);
         }
+    }
+
+    function loadFonts(urls) {
+        for (const url of urls) { 
+            const name = url.match(/.+(?=\.)/g);
+            const font = new FontFace(name, `url(fonts/${url})`);
+
+            const promiseFn = new Promise(resolve => {
+                font.load().then(font => {
+                    document.fonts.add(font);
+                    resolve();
+                });
+            });
     
-        return Promise.all(promises);
+            promises.push(promiseFn);
+        }
     }
 }
 
