@@ -4,6 +4,7 @@ function setStyles() {
     styles.gameOver = new GameOverStyles();
     styles.pause = new PauseStyles();
     styles.shieldPanel = new ShieldPanelStyles();
+    styles.score = new ScoreStyles();
 
     function GameOverStyles() {
         this.text = 'GAME OVER';
@@ -43,5 +44,17 @@ function setStyles() {
 
         this.bgColor = 'rgba(0, 127, 188)';
         this.borderColor = 'white';
+    }
+
+    function ScoreStyles() {
+        this.x = 5;
+        this.y = 40;
+
+        this.text = {
+            fillStyle: 'white',
+            font: '15px salmapro',
+            textAlign: 'left',
+            textBaseline: 'top',
+        }
     }
 }

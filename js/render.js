@@ -67,4 +67,11 @@ function render() {
         }
         ctx.fillText(styles.pause.text, styles.pause.x, styles.pause.y);
     }
+
+    if (state === 'playing' || state === 'paused' || state === 'gameOver') {
+        for (let style in styles.score.text) {
+            ctx[style] = styles.score.text[style];
+        }
+        ctx.fillText(`Score: ${ship.score}`, styles.score.x, styles.score.y);
+    }
 }

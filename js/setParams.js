@@ -29,6 +29,7 @@ function setParams() {
         {
             ship.lifes = [];
             ship.lifesCount = params.lifesCount;
+            ship.score = 0;
     
             const lifesBaseX = 5;
             const lifesBaseY = 5;

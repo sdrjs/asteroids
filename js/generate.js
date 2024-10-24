@@ -7,18 +7,21 @@ const generate = (() => {
             maxDx: 125,
             maxDy: 125,
             size: 40,
+            score: 1,
         },
         2: {
             lifes: 5,
             maxDx: 60,
             maxDy: 60,
             size: 57,
+            score: 3,
         },
         3: {
             lifes: 25,
             maxDx: 25,
             maxDy: 25,
             size: 85,
+            score: 10,
         },
     };
 
@@ -37,7 +40,7 @@ const generate = (() => {
         const angle = getRandomNumber({ max: 250, withOppositeSign: true });
         const currentRotation = getRandomNumber({ max: 180, withOppositeSign: true });
     
-        asteroids.push({ x, y, dx, dy, width, height, angle, currentRotation, lifes: setup.lifes });
+        asteroids.push({ x, y, dx, dy, width, height, angle, currentRotation, lifes: setup.lifes, score: setup.score });
     }
     
     function generateFires() {
