@@ -34,8 +34,10 @@ function addEventListeners() {
     });
 
     canvas.addEventListener('pointermove', function updateCursorPosition(e) {
-        cursor.x = e.offsetX;
-        cursor.y = e.offsetY;
+        if (state === 'playing' || state === 'paused') {
+            cursor.x = e.offsetX;
+            cursor.y = e.offsetY;
+        }
 
         if (state === 'paused' && isMobile() && checkCursorOnShip()) {
             setState('playing');
