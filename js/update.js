@@ -38,9 +38,9 @@ function update(dt) { /* dt - time in seconds */
         asteroid.centerY = asteroid.y + asteroid.height / 2;
     }
 
-    if (state === 'playing' && cursorX) {
-        let shipX = cursorX - I.ship.width / 2;
-        let shipY = cursorY - I.ship.height / 2;
+    if (state === 'playing' && cursor.x) {
+        let shipX = cursor.x - I.ship.width / 2;
+        let shipY = cursor.y - I.ship.height / 2;
 
         if (shipX < 0) shipX = 0;
         if (shipX > canvas.width - I.ship.width) shipX = canvas.width - I.ship.width;
