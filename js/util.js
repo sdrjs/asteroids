@@ -1,5 +1,15 @@
 'use strict';
 
+function isMobile() {
+    const isAndroid = navigator.userAgent.match(/Android/i);
+    const isBlackBerry = navigator.userAgent.match(/BlackBerry/i);
+    const isiOS = navigator.userAgent.match(/iPhone|iPad|iPod/i);
+    const isOpera = navigator.userAgent.match(/Opera Mini/i);
+    const isWindows = navigator.userAgent.match(/IEMobile/i);
+
+    return Boolean(isAndroid || isBlackBerry || isiOS || isOpera || isWindows);
+}
+
 function getRandomInteger({ min = 0, max, withOppositeSign = false }) {
     let result = Math.floor(Math.random() * (max - min + 1)) + min;
 
