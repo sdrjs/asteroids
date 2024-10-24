@@ -24,7 +24,11 @@ function addEventListeners() {
     });
     
     canvas.addEventListener('click', function(e) {
-        if (state === 'ready' || state === 'paused' && checkCursorOnShip() || state === 'gameOver') {
+        if (state === 'paused' && !isMobile() && checkCursorOnShip()) {
+            setState('playing');
+        }
+
+        if (state === 'ready' || state === 'gameOver') {
             setState('playing');
         }
     });
@@ -32,6 +36,10 @@ function addEventListeners() {
     canvas.addEventListener('pointermove', function updateCursorPosition(e) {
         cursor.x = e.offsetX;
         cursor.y = e.offsetY;
+
+        if (state === 'paused' && isMobile() && checkCursorOnShip()) {
+            setState('playing');
+        }
     });
 
     function checkCursorOnShip() {
