@@ -132,6 +132,10 @@ function update(dt) { /* dt - time in seconds */
                 if (asteroid.lifes <= 0) {
                     asteroids.splice(j, 1);
                     generate.asteroidExplosion(asteroid);
+
+                    if (state === 'playing') {
+                        ship.score += asteroid.score;
+                    }
                 }
 
                 break;
@@ -151,6 +155,7 @@ function update(dt) { /* dt - time in seconds */
                 i--;
     
                 generate.asteroidExplosion(asteroid);
+                ship.score += asteroid.score;
     
                 if (params.shieldActive) {
                     params.shieldActive = false;
