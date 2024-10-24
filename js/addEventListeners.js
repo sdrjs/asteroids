@@ -11,7 +11,7 @@ function addEventListeners() {
         if (e.code === 'KeyP') {
             if (state === 'playing') {
                 setState('paused');
-            } else if (state === 'paused') {
+            } else if (state === 'paused' && checkCursorOnShip()) {
                 setState('playing');
             }
         }
@@ -24,13 +24,20 @@ function addEventListeners() {
     });
     
     canvas.addEventListener('click', function(e) {
-        if (state === 'ready' || state === 'paused' || state === 'gameOver') {
+        if (state === 'ready' || state === 'paused' && checkCursorOnShip() || state === 'gameOver') {
             setState('playing');
         }
     });
 
     canvas.addEventListener('pointermove', function updateCursorPosition(e) {
-        cursorX = e.offsetX;
-        cursorY = e.offsetY;
+        cursor.x = e.offsetX;
+        cursor.y = e.offsetY;
     });
+
+    function checkCursorOnShip() {
+        const isInRangeX = cursor.x >= ship.x && cursor.x <= ship.x + I.ship.width;
+        const isInRangeY = cursor.y >= ship.y && cursor.y <= ship.y + I.ship.height;
+        
+        return isInRangeX && isInRangeY;
+    }
 }

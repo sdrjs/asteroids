@@ -21,8 +21,7 @@ let shieldParams = { sWidth: 192, sHeight: 192, framesPerSecond: 60, offsetY: 7,
 const FIRE_SIZE = 30;
 
 let state;
-let cursorX;
-let cursorY;
+const cursor = {};
 
 setCssScale();
 
@@ -119,5 +118,5 @@ function prepareGame() {
 function finishGame() {
     generate.shipExplosion();
     
-    cursorX = cursorY = null;
+    cursor.x = cursor.y = null;
 }
