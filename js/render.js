@@ -69,6 +69,13 @@ function render() {
     }
 
     if (state === 'playing' || state === 'paused' || state === 'gameOver') {
+        for (let style in styles.danger.text) {
+            ctx[style] = styles.danger.text[style];
+        }
+        ctx.fillText(`Danger: ${params.asteroidsProbability.toFixed(1)}`, styles.danger.x, styles.danger.y);
+    }
+
+    if (state === 'playing' || state === 'paused' || state === 'gameOver') {
         for (let style in styles.score.text) {
             ctx[style] = styles.score.text[style];
         }
