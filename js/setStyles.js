@@ -4,6 +4,7 @@ function setStyles() {
     styles.gameOver = new GameOverStyles();
     styles.pause = new PauseStyles();
     styles.shieldPanel = new ShieldPanelStyles();
+    styles.danger = new DangerStyles();
     styles.score = new ScoreStyles();
 
     function GameOverStyles() {
@@ -46,13 +47,25 @@ function setStyles() {
         this.borderColor = 'white';
     }
 
-    function ScoreStyles() {
+    function DangerStyles() {
         this.x = 5;
         this.y = 40;
 
         this.text = {
+            fillStyle: '#c3c3c3',
+            font: '14px madeCanvas',
+            textAlign: 'left',
+            textBaseline: 'top',
+        }
+    }
+
+    function ScoreStyles() {
+        this.x = styles.danger.x;
+        this.y = styles.danger.y + 22;
+
+        this.text = {
             fillStyle: 'white',
-            font: '15px salmapro',
+            font: '20px salmapro',
             textAlign: 'left',
             textBaseline: 'top',
         }
