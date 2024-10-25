@@ -38,7 +38,7 @@ function setStyles() {
     function ShieldPanelStyles() {
         this.text = {
             fillStyle: 'white',
-            font: '15px sans-serif',
+            font: '18px salmapro',
             textAlign: 'center',
             textBaseline: 'middle',
         }
