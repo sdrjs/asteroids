@@ -96,7 +96,6 @@ function main() {
     timers.now = Date.now();
     if (state === 'paused') timers.last = null;
     const dt = timers.last ? (timers.now - timers.last) / 1000 : 0;
-    if (dt > 0) FPS.measurements.push(1 / dt);
 
     update(dt);
     render();

@@ -64,14 +64,14 @@ function setParams() {
         FPS.lastMeasurement = null;
         FPS.measurements = [];
         FPS.value = 'xx';
-        FPS.updateTime = 700;
-        FPS.x = canvas.width - 5;
-        FPS.y = 5;
+        FPS.updateInterval = 700;
+        FPS.x = 5;
+        FPS.y = canvas.height - 5;
         FPS.styles = {
             fillStyle: 'white',
             font: '15px sans-serif',
-            textAlign: 'right',
-            textBaseline: 'top',
+            textAlign: 'left',
+            textBaseline: 'bottom',
         };
     }
 

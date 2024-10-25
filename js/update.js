@@ -1,7 +1,8 @@
 'use strict';
 
 function update(dt) { /* dt - time in seconds */
-    if (FPS.measurements.length && timers.now >= FPS.lastMeasurement + FPS.updateTime) {
+    if (dt > 0) FPS.measurements.push(1 / dt);
+    if (FPS.measurements.length && timers.now >= FPS.lastMeasurement + FPS.updateInterval) {
         const fps = FPS.measurements.reduce((acc, current) => acc + current, 0) / FPS.measurements.length;
         FPS.value = Math.round(fps);
 
