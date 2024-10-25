@@ -37,7 +37,7 @@ const generate = (() => {
         const dx = getRandomNumber({ max: setup.maxDx, withOppositeSign: true });
         const dy = getRandomNumber({ min: setup.maxDy * 0.7, max: setup.maxDy });
     
-        const angle = getRandomNumber({ max: 250, withOppositeSign: true });
+        const angle = getRandomNumber({ max: setup.maxDy * 2, withOppositeSign: true });
         const currentRotation = getRandomNumber({ max: 180, withOppositeSign: true });
     
         asteroids.push({ x, y, dx, dy, width, height, angle, currentRotation, lifes: setup.lifes, score: setup.score });
