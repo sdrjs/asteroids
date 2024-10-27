@@ -14,6 +14,7 @@ const explosions = [];
 const timers = {};
 const FPS = {};
 const styles = {};
+const buttons = {};
 
 let explosionParams = { sWidth: 128, sHeight: 128, framesPerSecond: 42, scale: 1.5 };
 let shieldParams = { sWidth: 192, sHeight: 192, framesPerSecond: 60, offsetY: 7, scaleX: 2, scaleY: 2.5 };
@@ -26,7 +27,10 @@ const cursor = {};
 setCssScale();
 
 preload()
-    .then(setStyles)
+    .then(() => {
+        setStyles();
+        addButtons();
+    })
     .then(() => setState('ready'))
     .then(main);
 

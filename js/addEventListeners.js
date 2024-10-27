@@ -28,7 +28,7 @@ function addEventListeners() {
             setState('playing');
         }
 
-        if (state === 'ready' || state === 'gameOver') {
+        if (state === 'gameOver') {
             setState('playing');
         }
     });

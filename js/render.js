@@ -81,4 +81,8 @@ function render() {
         }
         ctx.fillText(`Score: ${ship.score}`, styles.score.x, styles.score.y);
     }
+
+    for (let button in buttons) {
+        buttons[button].render();
+    }
 }

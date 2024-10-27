@@ -11,6 +11,7 @@ function setState(newState) {
                 prepareGame();
             }
 
+            buttons.startGame.show();
             canvas.classList.add('inactive');
             break;
         
