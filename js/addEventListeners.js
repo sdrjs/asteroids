@@ -27,10 +27,6 @@ function addEventListeners() {
         if (state === 'paused' && !isMobile() && checkCursorOnShip()) {
             setState('playing');
         }
-
-        if (state === 'gameOver') {
-            setState('playing');
-        }
     });
 
     canvas.addEventListener('pointermove', function updateCursorPosition(e) {

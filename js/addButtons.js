@@ -19,4 +19,23 @@ function addButtons() {
             setState('playing');
         },
     });
+
+    buttons.gameOverBack = new Button({ 
+        x: canvas.width / 2,
+        y: canvas.height - 100,
+        width: 130,
+        height: 50,
+        radius: 20,
+        text: '⤺ BACK',
+        linearGradient: ["#252b31", "#4c545b"],
+        fontFamily: 'salmapro',
+        align: 'center',
+        fontSize: 20,
+        padding: 20,
+        color: "#fff",
+        onClick() {
+            this.hide();
+            setState('ready');
+        },
+    });
 }

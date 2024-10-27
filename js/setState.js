@@ -7,7 +7,7 @@ function setState(newState) {
             break;
 
         case 'ready':
-            if (state === 'loading') {
+            if (state === 'loading' || state === 'gameOver') {
                 prepareGame();
             }
 
@@ -30,6 +30,7 @@ function setState(newState) {
         case 'gameOver':
             finishGame();
             
+            buttons.gameOverBack.show();
             canvas.classList.add('inactive');
             break;
 
