@@ -6,6 +6,8 @@ function setStyles() {
     styles.shieldPanel = new ShieldPanelStyles();
     styles.danger = new DangerStyles();
     styles.score = new ScoreStyles();
+    styles.gameOverEarned = new GameOverEarnedStyles();
+    styles.balance = new BalanceStyles();
 
     function GameOverStyles() {
         this.text = 'GAME OVER';
@@ -69,5 +71,29 @@ function setStyles() {
             textAlign: 'left',
             textBaseline: 'top',
         }
+    }
+
+    function GameOverEarnedStyles() {
+        this.x = canvas.width / 2;
+        this.y = canvas.height / 2 + 100;
+
+        this.styles = {
+            fillStyle: '#ffdd00',
+            font: '30px salmapro',
+            textAlign: 'center',
+            textBaseline: 'middle',
+        };
+    }
+
+    function BalanceStyles() {
+        this.x = canvas.width - 7;
+        this.y = 7;
+
+        this.styles = {
+            fillStyle: 'yellow',
+            font: '22px salmapro',
+            textAlign: 'right',
+            textBaseline: 'top',
+        };
     }
 }

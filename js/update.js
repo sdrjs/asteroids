@@ -183,4 +183,6 @@ function update(dt) { /* dt - time in seconds */
             timers.generatedFires = 0;
         }
     }
+
+    if (state === 'playing') ship.balance = Math.floor(ship.score / 50);
 }

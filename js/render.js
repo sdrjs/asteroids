@@ -59,6 +59,13 @@ function render() {
             ctx[style] = styles.gameOver.styles[style];
         }
         ctx.fillText(styles.gameOver.text, styles.gameOver.x, styles.gameOver.y);
+
+        if (ship.balance) {
+            for (let style in styles.gameOverEarned.styles) {
+                ctx[style] = styles.gameOverEarned.styles[style];
+            }
+            ctx.fillText(`You've earned ${ship.balance}💎`, styles.gameOverEarned.x, styles.gameOverEarned.y);
+        }
     }
 
     if (state === 'paused') {
@@ -80,6 +87,13 @@ function render() {
             ctx[style] = styles.score.text[style];
         }
         ctx.fillText(`Score: ${ship.score}`, styles.score.x, styles.score.y);
+    }
+
+    if (state === 'ready' || state === 'gameOver') {
+        for (let style in styles.balance.styles) {
+            ctx[style] = styles.balance.styles[style];
+        }
+        ctx.fillText(`💎 ${balance}`, styles.balance.x, styles.balance.y);
     }
 
     for (let button in buttons) {
