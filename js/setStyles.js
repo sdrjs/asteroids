@@ -8,6 +8,7 @@ function setStyles() {
     styles.score = new ScoreStyles();
     styles.gameOverEarned = new GameOverEarnedStyles();
     styles.balance = new BalanceStyles();
+    styles.nickname = new NicknameStyles();
 
     function GameOverStyles() {
         this.text = 'GAME OVER';
@@ -93,6 +94,18 @@ function setStyles() {
             fillStyle: 'yellow',
             font: '22px salmapro',
             textAlign: 'right',
+            textBaseline: 'top',
+        };
+    }
+
+    function NicknameStyles() {
+        this.x = canvas.width / 2;
+        this.y = 7;
+
+        this.styles = {
+            fillStyle: '#9966cc',
+            font: '27px salmapro',
+            textAlign: 'center',
             textBaseline: 'top',
         };
     }

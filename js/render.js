@@ -93,7 +93,14 @@ function render() {
         for (let style in styles.balance.styles) {
             ctx[style] = styles.balance.styles[style];
         }
-        ctx.fillText(`💎 ${balance}`, styles.balance.x, styles.balance.y);
+        ctx.fillText(`💎 ${user.balance}`, styles.balance.x, styles.balance.y);
+    }
+
+    if (state === 'ready') {
+        for (let style in styles.nickname.styles) {
+            ctx[style] = styles.nickname.styles[style];
+        }
+        ctx.fillText(user.nickname, styles.nickname.x, styles.nickname.y);
     }
 
     for (let button in buttons) {
