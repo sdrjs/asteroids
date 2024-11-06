@@ -12,7 +12,7 @@ class User {
             const user = await AJAX.get(`${this.#url.users}/${userId}`);
 
             for (let key in user) {
-                this[key] = user[key];
+                if (!key.startsWith('_')) this[key] = user[key];
             }
         } else {
             this.nickname = getName();
@@ -20,10 +20,12 @@ class User {
             this.upgrages = {};
 
             const time = getTime();
-            const newUser = await AJAX.post(`${this.#url.users}`, { ...this, registered: time.value, timezone: time.timezone, log: [] });
-            localStorage.setItem('id', newUser.id);
+            const newUser = await AJAX.post(`${this.#url.users}`, { ...this, _registered: time.value, _timezone: time.timezone, _log: [] });
 
-            await this.updateShortLog({ time: time.value, id: newUser.id, nickname: this.nickname, action: 'register' });
+            this.id = newUser.id;
+            localStorage.setItem('id', this.id);
+
+            await this.updateShortLog({ time: time.value, id: this.id, nickname: this.nickname, action: 'register' });
         }
 
         function getName() {
@@ -45,34 +47,67 @@ class User {
     }
 
     async update(action) {
-        const id = localStorage.getItem('id');
-        const savedUser = await AJAX.get(`${this.#url.users}/${id}`);
+        const savedUser = await AJAX.get(`${this.#url.users}/${this.id}`);
 
         switch (action) {
-            case 'balance':
-                await AJAX.put(`${this.#url.users}/${id}`, { ...savedUser, balance: this.balance });
+            case 'finish game':
+                const leaderBoardData = await this.updateLeaderboard() || {};
 
-                await this.updateUserLog({ savedUser, action, data: { oldValue: savedUser.balance, newValue: this.balance } });
+                await Promise.all([
+                    AJAX.put(`${this.#url.users}/${savedUser.id}`, { ...savedUser, balance: this.balance }),
+                    this.updateUserLog({ savedUser, action, data: { score: ship.score, oldBalance: savedUser.balance, newBalance: this.balance, ...leaderBoardData } }),
+                ]);
+
                 break;
 
             default:
-                console.log('unknown action');
+                console.error('unknown action');
         }
     }
 
     async updateUserLog({ savedUser, action, data }) {
-        const id = localStorage.getItem('id');
         const time = getTime().value;
         const record = { time, action, data };
 
         await Promise.all([
-            AJAX.put(`${this.#url.users}/${id}`, { log: [...savedUser.log, record] }),
-            this.updateShortLog({ time, id, nickname: savedUser.nickname, action }),
+            AJAX.put(`${this.#url.users}/${this.id}`, { _log: [...savedUser._log, record] }),
+            this.updateShortLog({ time, id: this.id, nickname: this.nickname, action }),
         ]);
     }
 
     async updateShortLog({ time, id, nickname, action }) {
         const oldData = await AJAX.get(this.#url.log);
         await AJAX.put(this.#url.log, { log: [...oldData.log, `${time} [${id}]${nickname} ${action}`] });
+    }
+
+    async updateLeaderboard() {
+        const { leaderboard } = await AJAX.get(this.#url.leaderboard);
+
+        const currentPlaceIdx = leaderboard.findIndex(user => user.id === this.id);
+        if (currentPlaceIdx !== -1) {
+            if (leaderboard[currentPlaceIdx].score >= ship.score) return;
+
+            leaderboard.splice(currentPlaceIdx, 1); // only one place per user
+        }
+
+        const leaderboardPlaces = 10;
+        if (leaderboard.length < leaderboardPlaces || leaderboard[leaderboardPlaces - 1].score < ship.score) {
+            let placeIdx = leaderboard.findIndex(user => ship.score > user.score);
+            if (placeIdx === -1) placeIdx = leaderboard.length;
+            
+            if (leaderboard.length === leaderboardPlaces) {
+                leaderboard.pop();
+            }
+
+            leaderboard.splice(placeIdx, 0, {
+                id: this.id,
+                nickname: this.nickname,
+                score: ship.score,
+            });
+
+            await AJAX.put(this.#url.leaderboard, { leaderboard });
+
+            return { leaderboardPlace: placeIdx + 1 };
+        }
     }
 }
