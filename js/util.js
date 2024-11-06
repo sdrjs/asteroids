@@ -52,3 +52,19 @@ function checkIntersection({ obj1, obj2, contactArea = 0 /* minimum number of in
 
     return isXIntersects && isYIntersects;
 }
+
+function getTime() {
+    const date = new Date();
+    date.setMinutes(date.getUTCMinutes() + 180); // moscow time
+
+    const day = `${date.getUTCDate()}.${date.getUTCMonth() + 1}.${date.getUTCFullYear()}`;
+    const time = `${date.getUTCHours()}:${date.getUTCMinutes()}:${date.getUTCSeconds()}`;
+
+    const hoursOffsetUTC = -date.getTimezoneOffset() / 60;
+    const timezone = `UTC${(hoursOffsetUTC > 0 ? '+' : '')}${hoursOffsetUTC}`;
+
+    return { 
+        value: `${day} ${time}`.replace(/\b\d\b/g, "0$&"), 
+        timezone,
+    };       
+}

@@ -66,6 +66,8 @@ async function preload() {
         { name: 'heartEmpty', src: 'heart_empty.png' },
     ]);
 
+    promises.push(user.loadData());
+
     await Promise.all(promises);
 
     function loadImages(images) {
@@ -120,10 +122,10 @@ function prepareGame() {
     explosions.length = 0;
 }
 
-function finishGame() {
+async function finishGame() {
     generate.shipExplosion();
     user.balance += ship.balance;
-    user.update();
+    await user.update('balance');
     
     cursor.x = cursor.y = null;
 }
