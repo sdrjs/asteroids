@@ -9,28 +9,36 @@ class User {
         const userId = localStorage.getItem('id');
 
         if (userId) {
-            const user = await AJAX.get(`${this.#url.users}/${userId}`);
+            const userData = await AJAX.get(`${this.#url.users}/${userId}`);
 
-            for (let key in user) {
-                if (!key.startsWith('_')) this[key] = user[key];
+            if (userData === 'Not found' || userData === 'Something went wrong while parsing response JSON') {
+                this.createUser();
+            } else {
+                for (let key in userData) {
+                    if (!key.startsWith('_')) this[key] = userData[key];
+                }
             }
         } else {
-            this.nickname = getName();
-            this.balance = 0;
-            this.upgrades = {};
-
-            for (let upgrade in upgrades) {
-                this.upgrades[upgrade] = 0;
-            }
-
-            const time = getTime();
-            const newUser = await AJAX.post(`${this.#url.users}`, { ...this, _registered: time.value, _timezone: time.timezone, _log: [] });
-
-            this.id = newUser.id;
-            localStorage.setItem('id', this.id);
-
-            await this.updateShortLog({ time: time.value, id: this.id, nickname: this.nickname, action: 'register' });
+            this.createUser();
         }
+    }
+
+    async createUser() {
+        this.nickname = getName();
+        this.balance = 0;
+        this.upgrades = {};
+
+        for (let upgrade in upgrades) {
+            this.upgrades[upgrade] = 0;
+        }
+
+        const time = getTime();
+        const newUser = await AJAX.post(`${this.#url.users}`, { ...this, _registered: time.value, _timezone: time.timezone, _log: [] });
+
+        this.id = newUser.id;
+        localStorage.setItem('id', this.id);
+
+        await this.updateShortLog({ time: time.value, id: this.id, nickname: this.nickname, action: 'register' });
 
         function getName() {
             const maxNameLength = 20;
