@@ -1,7 +1,11 @@
 'use strict';
 
 function render() {
-    ctx.drawImage(I.bg, 0, 0, canvas.width, canvas.height);
+    if (state === 'playing' || state === 'gameOver') {
+        ctx.drawImage(I.bg_game, 0, 0, canvas.width, canvas.height);
+    } else {
+        ctx.drawImage(I.bg_menu, 0, 0, canvas.width, canvas.height);
+    }
 
     for (let expl of explosions) {
         ctx.drawImage(I.explosion, expl.sx, expl.sy, explosionParams.sWidth, explosionParams.sHeight, expl.x, expl.y, expl.width, expl.height);

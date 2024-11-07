@@ -56,7 +56,8 @@ async function preload() {
     ]);
 
     loadImages([
-        { name: 'bg', src: 'fon.png' },
+        { name: 'bg_game', src: 'fon.png' },
+        { name: 'bg_menu', src: 'menu.jpg' },
         { name: 'asteroid', src: 'astero.png' },
         { name: 'ship', src: 'ship01.png' },
         { name: 'fire', src: 'fire.png' },
