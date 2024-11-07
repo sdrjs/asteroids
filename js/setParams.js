@@ -4,12 +4,12 @@ function setParams() {
     params.showFPS = false;
 
     params.lifesCount = 3;
-    params.shieldRegenerationTime = 5000;
+    params.shieldRegenerationTime = upgrades.shield[user.upgrades.shield].value;
     params.shieldActive = true;
 
     params.angleBetweenFires = 5;
-    params.firesCount = 3; // max: 90 / angleBetweenFires
-    params.firesInterval = 670;
+    params.firesCount = upgrades.firesCount[user.upgrades.firesCount].value; // max: 90 / angleBetweenFires
+    params.firesInterval = upgrades.firesInterval[user.upgrades.firesInterval].value;
     params.firesSpeed = 300;
     
     params.asteroidsProbability = 0.5;

@@ -17,7 +17,11 @@ class User {
         } else {
             this.nickname = getName();
             this.balance = 0;
-            this.upgrages = {};
+            this.upgrades = {};
+
+            for (let upgrade in upgrades) {
+                this.upgrades[upgrade] = 0;
+            }
 
             const time = getTime();
             const newUser = await AJAX.post(`${this.#url.users}`, { ...this, _registered: time.value, _timezone: time.timezone, _log: [] });
