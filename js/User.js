@@ -62,13 +62,18 @@ class User {
         const savedUser = await AJAX.get(`${this.#url.users}/${this.id}`);
 
         switch (action) {
-            case 'finish game':
-                const leaderBoardData = await this.updateLeaderboard() || {};
+            case 'game':
+                const leaderboardData = await this.updateLeaderboard() || {};
 
-                await Promise.all([
-                    AJAX.put(`${this.#url.users}/${savedUser.id}`, { ...savedUser, balance: this.balance }),
-                    this.updateUserLog({ savedUser, action, data: { score: ship.score, oldBalance: savedUser.balance, newBalance: this.balance, ...leaderBoardData } }),
-                ]);
+                const gameData = { 
+                    score: ship.score, 
+                    oldBalance: savedUser.balance, 
+                    newBalance: this.balance, 
+                    ...leaderboardData
+                };
+
+                await AJAX.put(`${this.#url.users}/${this.id}`, { ...savedUser, balance: this.balance });
+                await this.updateUserLog({ savedUser, action, data: gameData, shortData: `${ship.score} score` });
 
                 break;
 
@@ -77,19 +82,21 @@ class User {
         }
     }
 
-    async updateUserLog({ savedUser, action, data }) {
+    async updateUserLog({ savedUser, action, data, shortData }) {
         const time = getTime().value;
         const record = { time, action, data };
 
         await Promise.all([
             AJAX.put(`${this.#url.users}/${this.id}`, { _log: [...savedUser._log, record] }),
-            this.updateShortLog({ time, id: this.id, nickname: this.nickname, action }),
+            this.updateShortLog({ time, id: this.id, nickname: this.nickname, action, data: shortData }),
         ]);
     }
 
-    async updateShortLog({ time, id, nickname, action }) {
+    async updateShortLog({ time, id, nickname, action, data }) {
         const oldData = await AJAX.get(this.#url.log);
-        await AJAX.put(this.#url.log, { log: [...oldData.log, `${time} [${id}]${nickname} ${action}`] });
+        data = data ? ` ${data}` : '';
+
+        await AJAX.put(this.#url.log, { log: [...oldData.log, `${time} [${id}]${nickname} ${action}${data}`] });
     }
 
     async updateLeaderboard() {
