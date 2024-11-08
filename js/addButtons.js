@@ -76,7 +76,7 @@ function addButtons() {
         width: 100,
         height: 40,
         radius: 10,
-        text: '⮜ back',
+        text: '⇐ back',
         linearGradient: ['#333', '#222'],
         align: 'bottom right',
         padding: 8,
