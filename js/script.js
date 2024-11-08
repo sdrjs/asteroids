@@ -26,6 +26,27 @@ const cursor = {};
 
 const user = new User();
 
+const tables = [];
+const upgradeTableContent = [
+    ['title', 'level', 'description', 'current', 'new', 'price', 'button'],
+    [upgrades.shield.title, () => `${user.upgrades.shield}/${upgrades.shield.levelsCount}`, upgrades.shield.description, () => upgrades.shield[user.upgrades.shield].value, () => user.upgrades.shield < upgrades.shield.levelsCount ? upgrades.shield[user.upgrades.shield + 1].value : 'MAX', () => user.upgrades.shield < upgrades.shield.levelsCount ? upgrades.shield[user.upgrades.shield + 1].cost : '-', () => 'UP'],
+    [upgrades.firesCount.title, () => `${user.upgrades.firesCount}/${upgrades.firesCount.levelsCount}`, upgrades.firesCount.description, () => upgrades.firesCount[user.upgrades.firesCount].value, () => user.upgrades.firesCount < upgrades.firesCount.levelsCount ? upgrades.firesCount[user.upgrades.firesCount + 1].value : 'MAX', () => user.upgrades.firesCount < upgrades.firesCount.levelsCount ? upgrades.firesCount[user.upgrades.firesCount + 1].cost : '-', () => 'UP'],
+    [upgrades.firesInterval.title, () => `${user.upgrades.firesInterval}/${upgrades.firesInterval.levelsCount}`, upgrades.firesInterval.description, () => upgrades.firesInterval[user.upgrades.firesInterval].value, () => user.upgrades.firesInterval < upgrades.firesInterval.levelsCount ? upgrades.firesInterval[user.upgrades.firesInterval + 1].value : 'MAX', () => user.upgrades.firesInterval < upgrades.firesInterval.levelsCount ? upgrades.firesInterval[user.upgrades.firesInterval + 1].cost : '-', () => 'UP'],
+];
+const upgradeTableTemplateColumns = [0.8, 1, 2.2, 1.1, 1.1, 0.8];
+const upgradeTable = new Table({ 
+    x: 25, 
+    y: 70, 
+    width: 550, 
+    height: 300, 
+    state: 'upgrade', 
+    content: upgradeTableContent,
+    templateColumns: upgradeTableTemplateColumns,
+    color: '#fff',
+    fontSize: 19,
+});
+tables.push(upgradeTable);
+
 setCssScale();
 
 preload()

@@ -110,4 +110,8 @@ function render() {
     for (let button in buttons) {
         buttons[button].render();
     }
+
+    for (let table of tables) {
+        if (state === table.state) table.render();
+    }
 }
