@@ -125,8 +125,8 @@ function prepareGame() {
 
 async function finishGame() {
     generate.shipExplosion();
+    cursor.x = cursor.y = null;
+
     user.balance += ship.balance;
     await user.update('game');
-    
-    cursor.x = cursor.y = null;
 }

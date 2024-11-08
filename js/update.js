@@ -156,7 +156,6 @@ function update(dt) { /* dt - time in seconds */
                 i--;
     
                 generate.asteroidExplosion(asteroid);
-                ship.score += asteroid.score;
     
                 if (params.shieldActive) {
                     params.shieldActive = false;
@@ -169,6 +168,8 @@ function update(dt) { /* dt - time in seconds */
                         setState('gameOver');
                     }
                 }
+
+                if (state === 'playing') ship.score += asteroid.score;
             }
         }
     }
