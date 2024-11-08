@@ -62,7 +62,8 @@ function addTables() {
                             this.hide();
                         }
 
-                        user.update('upgrade');
+                        setParams();
+                        user.update('upgrade', type);
                     } else {
                         alert('not enough gems');
                     }

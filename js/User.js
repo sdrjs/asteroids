@@ -58,7 +58,7 @@ class User {
         }
     }
 
-    async update(action) {
+    async update(action, type) {
         const savedUser = await AJAX.get(`${this.#url.users}/${this.id}`);
 
         switch (action) {
@@ -78,7 +78,18 @@ class User {
                 break;
 
             case 'upgrade':
-                console.log('upgrade');
+                const upgradeData = {
+                    type,
+                    oldLevel: savedUser.upgrades[type],
+                    newLevel: this.upgrades[type],
+                    cost: savedUser.balance - this.balance,
+                    oldBalance: savedUser.balance,
+                    newBalance: this.balance,
+                };
+
+                await AJAX.put(`${this.#url.users}/${this.id}`, { ...savedUser, balance: this.balance, upgrades: { ...savedUser.upgrades, [type]: this.upgrades[type] } });
+                await this.updateUserLog({ savedUser, action, data: upgradeData, shortData: `${type} {${this.upgrades[type]}}` });
+
                 break;
 
             default:
