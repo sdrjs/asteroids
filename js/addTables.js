@@ -6,9 +6,9 @@ function addTables() {
     function addUpgradeTable() {
         const upgradeTableContent = [
             ['type', 'level', 'description', 'current', 'new', 'price', 'buy'],
-            [upgrades.shield.title, () => `${user.upgrades.shield}/${upgrades.shield.levelsCount}`, upgrades.shield.description, () => upgrades.shield[user.upgrades.shield].value, () => user.upgrades.shield < upgrades.shield.levelsCount ? upgrades.shield[user.upgrades.shield + 1].value : 'MAX', () => user.upgrades.shield < upgrades.shield.levelsCount ? upgrades.shield[user.upgrades.shield + 1].cost : '-', { type: 'component', value: createUpgradeButton('shield') }],
-            [upgrades.firesCount.title, () => `${user.upgrades.firesCount}/${upgrades.firesCount.levelsCount}`, upgrades.firesCount.description, () => upgrades.firesCount[user.upgrades.firesCount].value, () => user.upgrades.firesCount < upgrades.firesCount.levelsCount ? upgrades.firesCount[user.upgrades.firesCount + 1].value : 'MAX', () => user.upgrades.firesCount < upgrades.firesCount.levelsCount ? upgrades.firesCount[user.upgrades.firesCount + 1].cost : '-', { type: 'component', value: createUpgradeButton('firesCount') }],
-            [upgrades.firesInterval.title, () => `${user.upgrades.firesInterval}/${upgrades.firesInterval.levelsCount}`, upgrades.firesInterval.description, () => upgrades.firesInterval[user.upgrades.firesInterval].value, () => user.upgrades.firesInterval < upgrades.firesInterval.levelsCount ? upgrades.firesInterval[user.upgrades.firesInterval + 1].value : 'MAX', () => user.upgrades.firesInterval < upgrades.firesInterval.levelsCount ? upgrades.firesInterval[user.upgrades.firesInterval + 1].cost : '-', { type: 'component', value: createUpgradeButton('firesInterval') }],
+            getUpgradeRow('shield'),
+            getUpgradeRow('firesCount'),
+            getUpgradeRow('firesInterval'),
         ];
     
         const upgradeTable = new Table({
@@ -25,19 +25,19 @@ function addTables() {
     
         tables.push(upgradeTable);
 
-        function createUpgradeButton(type) {
-            const handlers = {
-                shield() {
-                    console.log('shield btn click');
-                },
-                firesCount() {
-                    console.log('fires count btn click');
-                },
-                firesInterval() {
-                    console.log('fires interval btn click');
-                },
-            };
+        function getUpgradeRow(type) {
+            return [
+                upgrades[type].title,
+                () => `${user.upgrades[type]}/${upgrades[type].levelsCount}`,
+                upgrades[type].description,
+                () => upgrades[type][user.upgrades[type]].value,
+                () => user.upgrades[type] < upgrades[type].levelsCount ? upgrades[type][user.upgrades[type] + 1].value : 'MAX',
+                () => user.upgrades[type] < upgrades[type].levelsCount ? upgrades[type][user.upgrades[type] + 1].cost : '-',
+                user.upgrades[type] < upgrades[type].levelsCount ? { type: 'component', value: createUpgradeButton(type) } : '',
+            ];
+        }
 
+        function createUpgradeButton(type) {
             return (x, y) => new Button({
                 x,
                 y,
@@ -52,7 +52,20 @@ function addTables() {
                 reserveHover: true,
                 backgroundColor: '#ccc',
                 onClick() {
-                    handlers[type].call(this);
+                    const requiredAmount = upgrades[type][user.upgrades[type] + 1].cost;
+
+                    if (requiredAmount <= user.balance) {
+                        user.upgrades[type]++;
+                        user.balance -= requiredAmount;
+
+                        if (user.upgrades[type] === upgrades[type].levelsCount) {
+                            this.hide();
+                        }
+
+                        user.update('upgrade');
+                    } else {
+                        alert('not enough gems');
+                    }
                 },
             });
         }

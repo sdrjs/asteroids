@@ -77,6 +77,10 @@ class User {
 
                 break;
 
+            case 'upgrade':
+                console.log('upgrade');
+                break;
+
             default:
                 console.error('unknown action');
         }
