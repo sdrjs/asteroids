@@ -20,6 +20,11 @@ function setState(newState) {
             hideMenuButtons();
             break;
 
+        case 'leaderboard':
+            buttons.back.show();
+            hideMenuButtons();
+            break;
+
         case 'playing':
             if (state === 'gameOver') {
                 prepareGame();
@@ -49,11 +54,13 @@ function setState(newState) {
 
     function showMenuButtons() {
         buttons.startGame.show();
+        buttons.leaderboard.show();
         buttons.upgrade.show();
     }
 
     function hideMenuButtons() {
         buttons.startGame.hide();
+        buttons.leaderboard.hide();
         buttons.upgrade.hide();
     }
 }

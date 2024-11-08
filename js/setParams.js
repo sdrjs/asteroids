@@ -15,6 +15,8 @@ function setParams() {
     params.asteroidsProbability = 0.5;
     params.asteroidsIncrease = 0.02;
 
+    params.leaderboardPlaces = 10;
+
     setShipParams();
     setFpsParams();
     setExplosionParams();

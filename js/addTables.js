@@ -2,6 +2,7 @@
 
 function addTables() {
     addUpgradeTable();
+    addLeaderboardTable();
 
     function addUpgradeTable() {
         const upgradeTableContent = [
@@ -70,5 +71,32 @@ function addTables() {
                 },
             });
         }
+    }
+
+    async function addLeaderboardTable() {
+        const leaderboardRows = await user.getLeaderboard();
+
+        const leaderboardTableRows = leaderboardRows.leaderboard.map((row, idx) => [idx + 1, row.score, row.nickname]);
+
+        while (leaderboardTableRows.length < params.leaderboardPlaces) leaderboardTableRows.push([leaderboardTableRows.length + 1, '', '']);
+
+        const leaderboardTableContent = [
+            ['place', 'top score', 'nickname'],
+            ...leaderboardTableRows,
+        ];
+
+        const upgradeTable = new Table({
+            x: 100,
+            y: 75,
+            width: 400,
+            height: 475,
+            state: 'leaderboard',
+            content: leaderboardTableContent,
+            templateColumns: [1, 3, 4],
+            color: '#fff',
+            fontSize: 19,
+        });
+
+        tables.push(upgradeTable);
     }
 }

@@ -124,12 +124,11 @@ class User {
             leaderboard.splice(currentPlaceIdx, 1); // only one place per user
         }
 
-        const leaderboardPlaces = 10;
-        if (leaderboard.length < leaderboardPlaces || leaderboard[leaderboardPlaces - 1].score < ship.score) {
+        if (leaderboard.length < params.leaderboardPlaces || leaderboard[params.leaderboardPlaces - 1].score < ship.score) {
             let placeIdx = leaderboard.findIndex(user => ship.score > user.score);
             if (placeIdx === -1) placeIdx = leaderboard.length;
             
-            if (leaderboard.length === leaderboardPlaces) {
+            if (leaderboard.length === params.leaderboardPlaces) {
                 leaderboard.pop();
             }
 
@@ -143,5 +142,11 @@ class User {
 
             return { leaderboardPlace: placeIdx + 1 };
         }
+    }
+
+    async getLeaderboard() {
+        const leaderboard = await AJAX.get(this.#url.leaderboard);
+
+        return leaderboard;
     }
 }

@@ -55,6 +55,21 @@ function addButtons() {
         },
     });
 
+    buttons.leaderboard = new Button({
+        x: canvas.width / 2 + 10,
+        y: canvas.height - 100,
+        width: 150,
+        height: 50,
+        radius: 15,
+        text: '🏅 Leaderboard',
+        backgroundColor: 'rgb(137,153,225)',
+        align: 'right',
+        color: "#112",
+        onClick() {
+            setState('leaderboard');
+        },
+    });
+
     buttons.back = new Button({
         x: 7,
         y: 7,
