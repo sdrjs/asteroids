@@ -32,11 +32,37 @@ function addTables() {
                 upgrades[type].title,
                 () => `${user.upgrades[type]}/${upgrades[type].levelsCount}`,
                 upgrades[type].description,
-                () => upgrades[type][user.upgrades[type]].value,
-                () => user.upgrades[type] < upgrades[type].levelsCount ? upgrades[type][user.upgrades[type] + 1].value : 'MAX',
+                getCurrent,
+                getNew,
                 () => user.upgrades[type] < upgrades[type].levelsCount ? upgrades[type][user.upgrades[type] + 1].cost : '-',
                 user.upgrades[type] < upgrades[type].levelsCount ? { type: 'component', value: createUpgradeButton(type) } : '',
             ];
+
+            function getCurrent() {
+                let value = upgrades[type][user.upgrades[type]].value;
+
+                if (type === 'shield') {
+                    value = `${(value / 1000).toFixed(1)} s`;
+                } else if (type === 'firesInterval') {
+                    value = `${value} ms`;
+                }
+
+                return value;
+            }
+
+            function getNew() {
+                let value = user.upgrades[type] < upgrades[type].levelsCount ? upgrades[type][user.upgrades[type] + 1].value : 'MAX';
+
+                if (value === 'MAX') return value;
+
+                if (type === 'shield') {
+                    value = `${(value / 1000).toFixed(1)} s`;
+                } else if (type === 'firesInterval') {
+                    value = `${value} ms`;
+                }
+
+                return value;
+            }
         }
 
         function createUpgradeButton(type) {
