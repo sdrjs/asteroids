@@ -5,26 +5,26 @@ function addTables() {
     addLeaderboardTable();
 
     function addUpgradeTable() {
-        const upgradeTableContent = [
+        const tableContent = [
             ['type', 'level', 'description', 'current', 'new', 'price', 'buy'],
             getUpgradeRow('shield'),
             getUpgradeRow('firesCount'),
             getUpgradeRow('firesInterval'),
         ];
     
-        const upgradeTable = new Table({
+        const table = new Table({
             x: 25,
             y: 70,
             width: 550,
             height: 300,
             state: 'upgrade',
-            content: upgradeTableContent,
+            content: tableContent,
             templateColumns: [0.8, 1, 2.2, 1.1, 1.1, 0.8],
             color: '#fff',
             fontSize: 19,
         });
     
-        tables.push(upgradeTable);
+        tables.push(table);
 
         function getUpgradeRow(type) {
             return [
@@ -74,29 +74,29 @@ function addTables() {
     }
 
     async function addLeaderboardTable() {
-        const leaderboardRows = await user.getLeaderboard();
+        const rows = await user.getLeaderboard();
 
-        const leaderboardTableRows = leaderboardRows.leaderboard.map((row, idx) => [idx + 1, row.score, row.nickname]);
+        const tableRows = rows.leaderboard.map((row, idx) => [idx + 1, row.score, row.nickname]);
 
-        while (leaderboardTableRows.length < params.leaderboardPlaces) leaderboardTableRows.push([leaderboardTableRows.length + 1, '', '']);
+        while (tableRows.length < params.leaderboardPlaces) tableRows.push([tableRows.length + 1, '', '']);
 
-        const leaderboardTableContent = [
+        const tableContent = [
             ['place', 'top score', 'nickname'],
-            ...leaderboardTableRows,
+            ...tableRows,
         ];
 
-        const upgradeTable = new Table({
+        const table = new Table({
             x: 100,
             y: 75,
             width: 400,
             height: 475,
             state: 'leaderboard',
-            content: leaderboardTableContent,
+            content: tableContent,
             templateColumns: [1, 3, 4],
             color: '#fff',
             fontSize: 19,
         });
 
-        tables.push(upgradeTable);
+        tables.push(table);
     }
 }
