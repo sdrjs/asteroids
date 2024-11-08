@@ -70,6 +70,22 @@ function addButtons() {
         },
     });
 
+    buttons.settings = new Button({
+        x: 7,
+        y: 7,
+        width: 100,
+        height: 40,
+        radius: 10,
+        text: '🛠️ Settings',
+        linearGradient: ['#333', '#222'],
+        align: 'bottom right',
+        padding: 8,
+        color: "#fff",
+        onClick() {
+            setState('settings');
+        },
+    });
+
     buttons.back = new Button({
         x: 7,
         y: 7,

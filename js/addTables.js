@@ -3,6 +3,7 @@
 function addTables() {
     addUpgradeTable();
     addLeaderboardTable();
+    addSettingsTable();
 
     function addUpgradeTable() {
         const tableContent = [
@@ -98,5 +99,44 @@ function addTables() {
         });
 
         tables.push(table);
+    }
+
+    function addSettingsTable() {
+        const tableContent = [
+            ['display FPS', () => params.showFPS ? 'ON' : 'OFF', { type: 'component', value: createFpsButton() }],
+        ];
+    
+        const table = new Table({
+            x: 150,
+            y: 70,
+            width: 300,
+            height: 200,
+            state: 'settings',
+            content: tableContent,
+            color: '#fff',
+            fontSize: 19,
+        });
+    
+        tables.push(table);
+
+        function createFpsButton(type) {
+            return (x, y) => new Button({
+                x,
+                y,
+                width: 100,
+                height: 50,
+                radius: 15,
+                text: 'toggle ⇅',
+                align: 'center',
+                padding: 2,
+                fontSize: 15,
+                color: "#fff",
+                reserveHover: true,
+                backgroundColor: '#000',
+                onClick() {
+                    params.showFPS = !params.showFPS;
+                },
+            });
+        }
     }
 }
