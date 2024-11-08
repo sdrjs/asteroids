@@ -15,7 +15,6 @@ function addButtons() {
         padding: 20,
         color: "#fff",
         onClick() {
-            this.hide();
             setState('playing');
         },
     });
@@ -32,6 +31,40 @@ function addButtons() {
         align: 'center',
         fontSize: 20,
         padding: 20,
+        color: "#fff",
+        onClick() {
+            this.hide();
+            setState('ready');
+        },
+    });
+
+    buttons.upgrade = new Button({
+        x: canvas.width / 2 - 10,
+        y: canvas.height - 100,
+        width: 150,
+        height: 50,
+        radius: 15,
+        text: '📈 Upgrade',
+        backgroundColor: 'green',
+        backgroundColor: 'rgb(192,49,125)',
+        align: 'left',
+        fontSize: 18,
+        color: "#ede",
+        onClick() {
+            setState('upgrade');
+        },
+    });
+
+    buttons.back = new Button({
+        x: 7,
+        y: 7,
+        width: 100,
+        height: 40,
+        radius: 10,
+        text: '⮜ back',
+        linearGradient: ['#333', '#222'],
+        align: 'bottom right',
+        padding: 8,
         color: "#fff",
         onClick() {
             this.hide();

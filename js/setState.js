@@ -11,15 +11,21 @@ function setState(newState) {
                 prepareGame();
             }
 
-            buttons.startGame.show();
+            showMenuButtons();
             canvas.classList.add('inactive');
             break;
         
+        case 'upgrade':
+            buttons.back.show();
+            hideMenuButtons();
+            break;
+
         case 'playing':
             if (state === 'gameOver') {
                 prepareGame();
             }
 
+            hideMenuButtons();
             canvas.classList.remove('inactive');
             break;
 
@@ -40,4 +46,14 @@ function setState(newState) {
     }
 
     state = newState;
+
+    function showMenuButtons() {
+        buttons.startGame.show();
+        buttons.upgrade.show();
+    }
+
+    function hideMenuButtons() {
+        buttons.startGame.hide();
+        buttons.upgrade.hide();
+    }
 }

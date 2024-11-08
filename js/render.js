@@ -93,7 +93,7 @@ function render() {
         ctx.fillText(`Score: ${ship.score}`, styles.score.x, styles.score.y);
     }
 
-    if (state === 'ready' || state === 'gameOver') {
+    if (state === 'ready' || state === 'gameOver' || state === 'upgrade') {
         for (let style in styles.balance.styles) {
             ctx[style] = styles.balance.styles[style];
         }
