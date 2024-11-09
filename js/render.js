@@ -1,7 +1,7 @@
 'use strict';
 
 function render() {
-    if (state === 'playing' || state === 'gameOver') {
+    if (state === 'playing' || state === 'paused' || state === 'gameOver') {
         ctx.drawImage(I.bg_game, 0, 0, canvas.width, canvas.height);
     } else {
         ctx.drawImage(I.bg_menu, 0, 0, canvas.width, canvas.height);

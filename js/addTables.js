@@ -1,9 +1,31 @@
 'use strict';
 
 function addTables() {
+    addPauseTable();
     addUpgradeTable();
     addLeaderboardTable();
     addSettingsTable();
+
+    function addPauseTable() {
+        const tableContent = [
+            ['game paused'],
+            ['click on ship to continue'],
+        ];
+
+        const table = new Table({
+            x: canvas.width / 2,
+            y: 0,
+            width: 0,
+            height: 600,
+            state: 'paused',
+            content: tableContent,
+            color: 'rgba(0, 0, 0, 0.4)',
+            fontFamily: 'salmapro',
+            fontSize: 32,
+        });
+
+        tables.push(table);
+    }
 
     function addUpgradeTable() {
         const tableContent = [

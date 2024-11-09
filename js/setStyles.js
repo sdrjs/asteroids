@@ -31,8 +31,8 @@ function setStyles() {
         this.y = canvas.height / 2;
 
         this.styles = {
-            fillStyle: '#a6c9cd',
-            font: '70px sans-serif',
+            fillStyle: 'rgba(0, 0, 0, 0.4)',
+            font: '65px sans-serif',
             textAlign: 'center',
             textBaseline: 'middle',
         };
