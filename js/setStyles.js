@@ -87,12 +87,12 @@ function setStyles() {
     }
 
     function BalanceStyles() {
-        this.x = canvas.width - 7;
-        this.y = 7;
+        this.x = canvas.width - 12;
+        this.y = 15;
 
         this.styles = {
             fillStyle: 'yellow',
-            font: '22px salmapro',
+            font: '25px salmapro',
             textAlign: 'right',
             textBaseline: 'top',
         };
