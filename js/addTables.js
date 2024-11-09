@@ -37,7 +37,7 @@ function addTables() {
     
         const table = new Table({
             x: 15,
-            y: 70,
+            y: 85,
             width: 580,
             height: 300,
             state: 'upgrade',
@@ -132,7 +132,7 @@ function addTables() {
 
         const table = new Table({
             x: 100,
-            y: 75,
+            y: 90,
             width: 400,
             height: 475,
             state: 'leaderboard',
@@ -157,7 +157,7 @@ function addTables() {
     
         const table = new Table({
             x: 125,
-            y: 70,
+            y: 120,
             width: 350,
             height: 200,
             state: 'settings',
