@@ -9,6 +9,7 @@ function setStyles() {
     styles.gameOverEarned = new GameOverEarnedStyles();
     styles.balance = new BalanceStyles();
     styles.nickname = new NicknameStyles();
+    styles.settingsId = new SettingsIdStyles();
 
     function GameOverStyles() {
         this.text = 'GAME OVER';
@@ -126,6 +127,18 @@ function setStyles() {
             ctx.textBaseline = 'middle';
 
             ctx.fillText(user.nickname, canvas.width / 2, y + height / 2 + 1);
+        };
+    }
+
+    function SettingsIdStyles() {
+        this.x = canvas.width / 2;
+        this.y = canvas.height - 10;
+
+        this.styles = {
+            fillStyle: 'white',
+            font: '18px sans-serif',
+            textAlign: 'center',
+            textBaseline: 'bottom',
         };
     }
 }

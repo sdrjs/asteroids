@@ -104,6 +104,13 @@ function render() {
         styles.nickname.callback();
     }
 
+    if (state === 'settings') {
+        for (let style in styles.settingsId.styles) {
+            ctx[style] = styles.settingsId.styles[style];
+        }
+        ctx.fillText(`User id: ${user.id}`, styles.settingsId.x, styles.settingsId.y);
+    }
+
     for (let button in buttons) {
         buttons[button].render();
     }
