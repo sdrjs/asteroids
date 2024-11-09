@@ -131,4 +131,5 @@ async function finishGame() {
 
     user.balance += ship.balance;
     await user.update('game');
+    tables.leaderboard.redraw();
 }

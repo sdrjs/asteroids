@@ -24,7 +24,7 @@ function addTables() {
             fontSize: 32,
         });
 
-        tables.push(table);
+        tables.pause = table;
     }
 
     function addUpgradeTable() {
@@ -47,7 +47,7 @@ function addTables() {
             fontSize: 19,
         });
     
-        tables.push(table);
+        tables.upgrade = table;
 
         function getUpgradeRow(type) {
             return [
@@ -143,7 +143,9 @@ function addTables() {
             fontFamily: 'salmapro',
         });
 
-        tables.push(table);
+        delete tables.leaderboard;
+        tables.leaderboard = table;
+        tables.leaderboard.redraw = addLeaderboardTable;
     }
 
     function addSettingsTable() {
@@ -162,7 +164,7 @@ function addTables() {
             fontSize: 19,
         });
     
-        tables.push(table);
+        tables.settings = table;
 
         function createFpsButton() {
             return (x, y) => new Button({
