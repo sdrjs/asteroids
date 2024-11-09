@@ -14,13 +14,13 @@ function addTables() {
         ];
     
         const table = new Table({
-            x: 25,
+            x: 15,
             y: 70,
-            width: 550,
+            width: 580,
             height: 300,
             state: 'upgrade',
             content: tableContent,
-            templateColumns: [0.8, 1, 2.2, 1.1, 1.1, 0.8],
+            templateColumns: [0.8, 1, 2, 1.1, 1.1, 0.7, 0.9],
             color: '#fff',
             fontSize: 19,
         });
