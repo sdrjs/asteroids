@@ -152,15 +152,17 @@ function addTables() {
         const tableContent = [
             ['display FPS', () => params.showFPS ? 'ON' : 'OFF', { type: 'component', value: createParamButton('showFPS') }],
             ['play sounds', () => params.playSounds ? 'ON' : 'OFF', { type: 'component', value: createParamButton('playSounds') }],
+            ['change nickname', () => `${params.changeNicknamePrice}💎`, { type: 'component', value: createChangeNicknameButton() }],
         ];
     
         const table = new Table({
-            x: 150,
+            x: 125,
             y: 70,
-            width: 300,
+            width: 350,
             height: 200,
             state: 'settings',
             content: tableContent,
+            templateColumns: [1.4, 1, 1],
             color: '#fff',
             fontSize: 19,
         });
@@ -182,6 +184,31 @@ function addTables() {
                 backgroundColor: '#222',
                 onClick() {
                     params[param] = !params[param];
+                },
+            });
+        }
+
+        function createChangeNicknameButton() {
+            return (x, y) => new Button({
+                x,
+                y,
+                width: 100,
+                height: 40,
+                radius: 15,
+                text: 'change ⇅',
+                align: 'center',
+                padding: 2,
+                color: "#eee",
+                reserveHover: true,
+                backgroundColor: '#222',
+                async onClick() {
+                    if (user.balance < params.changeNicknamePrice) {
+                        alert('not enough gems');
+                        return;
+                    }
+
+                    user.nickname = await user.changeNickname();
+                    setStyles();
                 },
             });
         }

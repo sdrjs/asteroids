@@ -24,7 +24,7 @@ class User {
     }
 
     async createUser() {
-        this.nickname = getName();
+        this.nickname = this.getNickname();
         this.balance = 0;
         this.upgrades = {};
 
@@ -39,23 +39,30 @@ class User {
         localStorage.setItem('id', this.id);
 
         await this.updateShortLog({ time: time.value, id: this.id, nickname: this.nickname, action: 'register' });
+    }
 
-        function getName() {
-            const maxNameLength = 20;
+    getNickname() {
+        const maxNameLength = 20;
 
-            const name = prompt('Enter your nickname, please', '');
-            if (!name || !name.trim()) {
-                alert('nickname must not be empty');
-                return getName();
-            }
-
-            if (name.length > maxNameLength) {
-                alert(`nickname should not contain more than ${maxNameLength} symbols`);
-                return getName();
-            }
-
-            return name;
+        const name = prompt('Enter your nickname, please', '');
+        if (!name || !name.trim()) {
+            alert('nickname must not be empty');
+            return this.getNickname();
         }
+
+        if (name.length > maxNameLength) {
+            alert(`nickname should not contain more than ${maxNameLength} symbols`);
+            return this.getNickname();
+        }
+
+        return name.trim();
+    }
+
+    async changeNickname() {
+        const nickname = this.getNickname();
+        this.balance -= 10;
+
+        return await this.update('nickname', nickname);
     }
 
     async update(action, type) {
@@ -91,6 +98,21 @@ class User {
                 await this.updateUserLog({ savedUser, action, data: upgradeData, shortData: `${type} {${this.upgrades[type]}}` });
 
                 break;
+
+            case 'nickname':
+                const newNickname = type;
+
+                const nicknameData = {
+                    oldNickname: savedUser.nickname,
+                    newNickname,
+                    oldBalance: savedUser.balance,
+                    newBalance: this.balance,
+                };
+
+                await AJAX.put(`${this.#url.users}/${this.id}`, { ...savedUser, balance: this.balance, nickname: newNickname });
+                await this.updateUserLog({ savedUser, action, data: nicknameData, shortData: `to ${newNickname}` });
+
+                return newNickname;
 
             default:
                 console.error('unknown action');
