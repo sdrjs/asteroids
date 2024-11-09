@@ -99,14 +99,33 @@ function setStyles() {
     }
 
     function NicknameStyles() {
-        this.x = canvas.width / 2;
-        this.y = 7;
+        const font = '27px salmapro';
+        ctx.font = font;
+        const textWidth = ctx.measureText(user.nickname).width;
 
-        this.styles = {
-            fillStyle: '#9966cc',
-            font: '27px salmapro',
-            textAlign: 'center',
-            textBaseline: 'top',
+        const x = canvas.width / 2 - 24 - textWidth / 2;
+        const y = 8;
+        const width = textWidth + 48;
+        const height = 39;
+        const radius = 5;
+
+        this.callback = () => {
+            ctx.fillStyle = 'rgb(78, 78, 78)';
+            ctx.fillRoundedRect(x - 2, y - 2, width + 4, height + 4, radius - 2);
+    
+            ctx.fillStyle = 'rgb(0, 52, 71)';
+            ctx.fillRoundedRect(x, y, width, height, radius);
+    
+            ctx.strokeStyle = 'rgb(1, 120, 178)';
+            ctx.lineWidth = 2;
+            ctx.strokeRoundedRect(x + 2, y + 2, width - 4, height - 4, radius);
+
+            ctx.fillStyle = '#cdc3d6';
+            ctx.font = font;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            ctx.fillText(user.nickname, canvas.width / 2, y + height / 2 + 1);
         };
     }
 }

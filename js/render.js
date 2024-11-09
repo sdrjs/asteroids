@@ -100,11 +100,8 @@ function render() {
         ctx.fillText(`💎 ${user.balance}`, styles.balance.x, styles.balance.y);
     }
 
-    if (state === 'ready') {
-        for (let style in styles.nickname.styles) {
-            ctx[style] = styles.nickname.styles[style];
-        }
-        ctx.fillText(user.nickname, styles.nickname.x, styles.nickname.y);
+    if (state === 'ready' || state === 'leaderboard') {
+        styles.nickname.callback();
     }
 
     for (let button in buttons) {
