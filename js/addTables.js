@@ -151,8 +151,8 @@ function addTables() {
     function addSettingsTable() {
         const tableContent = [
             ['display FPS', () => params.showFPS ? 'ON' : 'OFF', { type: 'component', value: createParamButton('showFPS') }],
-            ['play sounds', () => params.playSounds ? 'ON' : 'OFF', { type: 'component', value: createParamButton('playSounds') }],
-            ['change nickname', () => `${params.changeNicknamePrice}💎`, { type: 'component', value: createChangeNicknameButton() }],
+            ['sounds', () => params.playSounds ? 'ON' : 'OFF', { type: 'component', value: createParamButton('playSounds') }],
+            ['nickname change', () => `${params.changeNicknamePrice}💎`, { type: 'component', value: createChangeNicknameButton() }],
         ];
     
         const table = new Table({
