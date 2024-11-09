@@ -141,20 +141,19 @@ function addTables() {
     
         tables.push(table);
 
-        function createFpsButton(type) {
+        function createFpsButton() {
             return (x, y) => new Button({
                 x,
                 y,
                 width: 100,
-                height: 50,
+                height: 40,
                 radius: 15,
                 text: 'toggle ⇅',
                 align: 'center',
                 padding: 2,
-                fontSize: 15,
-                color: "#fff",
+                color: "#eee",
                 reserveHover: true,
-                backgroundColor: '#000',
+                backgroundColor: '#222',
                 onClick() {
                     params.showFPS = !params.showFPS;
                 },
