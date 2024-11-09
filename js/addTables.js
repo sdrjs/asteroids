@@ -42,7 +42,7 @@ function addTables() {
             height: 300,
             state: 'upgrade',
             content: tableContent,
-            templateColumns: [0.8, 1, 2, 1.1, 1.1, 0.7, 0.9],
+            templateColumns: [0.8, 1, 1.9, 1.1, 1.1, 0.8, 0.9],
             color: '#fff',
             fontSize: 19,
         });
