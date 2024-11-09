@@ -2,6 +2,7 @@
 
 function setParams() {
     params.showFPS = false;
+    params.playSounds = true;
 
     params.lifesCount = 3;
     params.shieldRegenerationTime = upgrades.shield[user.upgrades.shield].value;

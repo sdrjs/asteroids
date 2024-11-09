@@ -13,6 +13,8 @@ const sounds = (() => {
         let currentAudio = 0;
 
         return function() {
+            if (!params.playSounds) return;
+
             audioCollection[currentAudio].currentTime = 0;
             audioCollection[currentAudio].play();
             currentAudio++;

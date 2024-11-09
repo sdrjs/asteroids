@@ -150,7 +150,8 @@ function addTables() {
 
     function addSettingsTable() {
         const tableContent = [
-            ['display FPS', () => params.showFPS ? 'ON' : 'OFF', { type: 'component', value: createFpsButton() }],
+            ['display FPS', () => params.showFPS ? 'ON' : 'OFF', { type: 'component', value: createParamButton('showFPS') }],
+            ['play sounds', () => params.playSounds ? 'ON' : 'OFF', { type: 'component', value: createParamButton('playSounds') }],
         ];
     
         const table = new Table({
@@ -166,7 +167,7 @@ function addTables() {
     
         tables.settings = table;
 
-        function createFpsButton() {
+        function createParamButton(param) {
             return (x, y) => new Button({
                 x,
                 y,
@@ -180,7 +181,7 @@ function addTables() {
                 reserveHover: true,
                 backgroundColor: '#222',
                 onClick() {
-                    params.showFPS = !params.showFPS;
+                    params[param] = !params[param];
                 },
             });
         }
