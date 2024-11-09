@@ -68,3 +68,15 @@ function getTime() {
         timezone,
     };       
 }
+
+function formatTime(ms) {
+    if (+(ms / 1000).toFixed(1) >= 100) {
+        return `${Math.round(ms / 1000)} s`;
+    } else if (+(ms / 1000).toFixed(2) >= 10) {
+        return `${(ms / 1000).toFixed(1)} s`;
+    } else if (+(ms / 1000).toFixed(3) >= 1) {
+        return `${(ms / 1000).toFixed(2)} s`;
+    } else {
+        return `${Math.round(ms)} ms`;
+    }
+}

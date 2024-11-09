@@ -34,17 +34,15 @@ function addTables() {
                 upgrades[type].description,
                 getCurrent,
                 getNew,
-                () => user.upgrades[type] < upgrades[type].levelsCount ? upgrades[type][user.upgrades[type] + 1].cost : '-',
+                () => user.upgrades[type] < upgrades[type].levelsCount ? `${upgrades[type][user.upgrades[type] + 1].cost}💎` : '-',
                 user.upgrades[type] < upgrades[type].levelsCount ? { type: 'component', value: createUpgradeButton(type) } : '',
             ];
 
             function getCurrent() {
                 let value = upgrades[type][user.upgrades[type]].value;
 
-                if (type === 'shield') {
-                    value = `${(value / 1000).toFixed(1)} s`;
-                } else if (type === 'firesInterval') {
-                    value = `${value} ms`;
+                if (type === 'shield' || type === 'firesInterval') {
+                    value = formatTime(value);
                 }
 
                 return value;
@@ -55,10 +53,8 @@ function addTables() {
 
                 if (value === 'MAX') return value;
 
-                if (type === 'shield') {
-                    value = `${(value / 1000).toFixed(1)} s`;
-                } else if (type === 'firesInterval') {
-                    value = `${value} ms`;
+                if (type === 'shield' || type === 'firesInterval') {
+                    value = formatTime(value);
                 }
 
                 return value;
