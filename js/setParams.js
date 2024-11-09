@@ -13,7 +13,7 @@ function setParams() {
     params.firesInterval = upgrades.firesInterval[user.upgrades.firesInterval].value;
     params.firesSpeed = 300;
     
-    params.asteroidsProbability = 0.5;
+    params.asteroidsProbability = 0.5 + JSON.parse(localStorage.getItem('dangerIncrease')) || 0;
     params.asteroidsIncrease = 0.02;
 
     params.leaderboardPlaces = 10;

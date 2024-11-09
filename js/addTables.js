@@ -5,6 +5,7 @@ function addTables() {
     addUpgradeTable();
     addLeaderboardTable();
     addSettingsTable();
+    addDangerIncreaseTable();
 
     function addPauseTable() {
         const tableContent = [
@@ -157,7 +158,7 @@ function addTables() {
     
         const table = new Table({
             x: 125,
-            y: 120,
+            y: 220,
             width: 350,
             height: 200,
             state: 'settings',
@@ -210,6 +211,62 @@ function addTables() {
 
                     user.nickname = await user.changeNickname();
                     setStyles();
+                },
+            });
+        }
+    }
+
+    function addDangerIncreaseTable() {
+        const minIncrease = 0;
+        const maxIncrease = 5;
+        let currentIncrease = JSON.parse(localStorage.getItem('dangerIncrease')) || 0;
+
+        const tableContent = [
+            [
+                'Additional danger',
+                { type: 'component', value: createSignButton('-', -1) },
+                () => currentIncrease,
+                { type: 'component', value: createSignButton('+', 1) },
+            ],
+        ];
+    
+        const table = new Table({
+            x: 140,
+            y: 155,
+            width: 320,
+            height: 0,
+            state: 'settings',
+            content: tableContent,
+            templateColumns: [4, 1, 1, 1],
+            color: '#fff',
+            fontSize: 19,
+        });
+    
+        tables.dangerChange = table;
+
+        function createSignButton(sign, diff) {
+            return (x, y) => new Button({
+                x,
+                y,
+                width: 45,
+                height: 35,
+                radius: 15,
+                text: sign,
+                align: 'center',
+                padding: 2,
+                color: "#eee",
+                reserveHover: true,
+                backgroundColor: '#222',
+                onClick() {
+                    const nextIncrease = currentIncrease + diff;
+                    if (nextIncrease < minIncrease || nextIncrease > maxIncrease) {
+                        alert(`Start danger increase must be in range between ${minIncrease} and ${maxIncrease}`);
+                        return;
+                    }
+
+                    localStorage.setItem('dangerIncrease', JSON.stringify(nextIncrease));
+                    setParams();
+                    currentIncrease = nextIncrease;
                 },
             });
         }
