@@ -1,11 +1,16 @@
 'use strict';
 
 function addTables() {
+    const showDangerIncreaseTable = user.upgrades.firesCount >= 3;
+
     addPauseTable();
     addUpgradeTable();
     addLeaderboardTable();
     addSettingsTable();
-    addDangerIncreaseTable();
+
+    if (showDangerIncreaseTable) {
+        addDangerIncreaseTable();
+    }
 
     function addPauseTable() {
         const tableContent = [
@@ -158,7 +163,7 @@ function addTables() {
     
         const table = new Table({
             x: 125,
-            y: 220,
+            y: showDangerIncreaseTable ? 220 : 120,
             width: 350,
             height: 200,
             state: 'settings',
