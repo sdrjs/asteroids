@@ -184,6 +184,7 @@ function addTables() {
                 backgroundColor: '#222',
                 onClick() {
                     params[param] = !params[param];
+                    localStorage.setItem(param, JSON.stringify(params[param]));
                 },
             });
         }

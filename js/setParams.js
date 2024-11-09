@@ -1,8 +1,8 @@
 'use strict';
 
 function setParams() {
-    params.showFPS = false;
-    params.playSounds = true;
+    params.showFPS = JSON.parse(localStorage.getItem('showFPS')) ?? false;
+    params.playSounds = JSON.parse(localStorage.getItem('playSounds')) ?? true;
 
     params.lifesCount = 3;
     params.shieldRegenerationTime = upgrades.shield[user.upgrades.shield].value;
