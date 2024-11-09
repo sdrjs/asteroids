@@ -139,7 +139,8 @@ function addTables() {
             content: tableContent,
             templateColumns: [1, 3, 4],
             color: '#fff',
-            fontSize: 19,
+            fontSize: 25,
+            fontFamily: 'salmapro',
         });
 
         tables.push(table);
