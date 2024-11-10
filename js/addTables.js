@@ -39,13 +39,14 @@ function addTables() {
             getUpgradeRow('shield'),
             getUpgradeRow('firesCount'),
             getUpgradeRow('firesInterval'),
+            getUpgradeRow('freeze'),
         ];
     
         const table = new Table({
             x: 15,
             y: 85,
             width: 580,
-            height: 300,
+            height: 375,
             state: 'upgrade',
             content: tableContent,
             templateColumns: [0.8, 1, 1.9, 1.1, 1.1, 0.8, 0.9],
@@ -73,6 +74,10 @@ function addTables() {
                     value = formatTime(value);
                 }
 
+                if (type === 'freeze') {
+                    value = `${Math.round(value * 100)}%`;
+                }
+
                 return value;
             }
 
@@ -83,6 +88,10 @@ function addTables() {
 
                 if (type === 'shield' || type === 'firesInterval') {
                     value = formatTime(value);
+                }
+
+                if (type === 'freeze') {
+                    value = `${Math.round(value * 100)}%`;
                 }
 
                 return value;

@@ -8,7 +8,7 @@ const generate = (() => {
             maxDy: 125,
             size: 40,
             score: 1,
-            freezeTime: 2000,
+            freezeTime: 1200,
         },
         2: {
             lifes: 5,
@@ -16,7 +16,7 @@ const generate = (() => {
             maxDy: 60,
             size: 57,
             score: 3,
-            freezeTime: 5000,
+            freezeTime: 3000,
         },
         3: {
             lifes: 25,
@@ -24,7 +24,7 @@ const generate = (() => {
             maxDy: 25,
             size: 85,
             score: 10,
-            freezeTime: 9000,
+            freezeTime: 5400,
         },
     };
 
@@ -103,9 +103,9 @@ const generate = (() => {
         const explosionY = explosionCenterY - explosionHeight / 2;
 
         const isFrozen = asteroid.isFrozen;
-        if (isFrozen && asteroid.freezeTime > timers.freezeDuration - timers.freezed) {
+        if (isFrozen && asteroid.freezeTime * params.freezeMultiplier > timers.freezeDuration - timers.freezed) {
             timers.freezed = 0;
-            timers.freezeDuration = asteroid.freezeTime;
+            timers.freezeDuration = asteroid.freezeTime * params.freezeMultiplier;
         }
     
         explosions.push({ x: explosionX, y: explosionY, width: explosionWidth, height: explosionHeight, frame: 0, sx: 0, sy: 0, isFrozen });

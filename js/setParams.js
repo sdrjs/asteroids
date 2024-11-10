@@ -6,6 +6,7 @@ function setParams() {
 
     params.lifesCount = 3;
     params.shieldRegenerationTime = upgrades.shield[user.upgrades.shield].value;
+    params.freezeMultiplier = upgrades.freeze[user.upgrades.freeze].value;
     params.shieldActive = true;
 
     params.angleBetweenFires = 5;

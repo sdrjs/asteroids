@@ -191,4 +191,52 @@ const upgrades = {
             cost: 180,
         },
     },
+    freeze: {
+        title: 'freeze',
+        description: 'freeze time',
+        levelsCount: 10,
+        0: {
+            value: 1,
+        },
+        1: {
+            value: 1.1,
+            cost: 1,
+        },
+        2: {
+            value: 1.2,
+            cost: 3,
+        },
+        3: {
+            value: 1.3,
+            cost: 7,
+        },
+        4: {
+            value: 1.4,
+            cost: 15,
+        },
+        5: {
+            value: 1.5,
+            cost: 25,
+        },
+        6: {
+            value: 1.6,
+            cost: 40,
+        },
+        7: {
+            value: 1.7,
+            cost: 70,
+        },
+        8: {
+            value: 1.8,
+            cost: 105,
+        },
+        9: {
+            value: 1.9,
+            cost: 150,
+        },
+        10: {
+            value: 2,
+            cost: 200,
+        },
+    },
 };
