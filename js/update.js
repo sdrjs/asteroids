@@ -10,33 +10,45 @@ function update(dt) { /* dt - time in seconds */
         FPS.lastMeasurement = timers.now;
     }
 
-    if (state === 'playing') {
-        randomCall({ probability: params.asteroidsProbability * dt, fn: () => generate.asteroid({ size: 1 }) });
-        randomCall({ probability: params.asteroidsProbability / 4 * dt, fn: () => generate.asteroid({ size: 2 }) });
-        randomCall({ probability: params.asteroidsProbability / 15 * dt, fn: () => generate.asteroid({ size: 3 }) });
-        params.asteroidsProbability += params.asteroidsIncrease * dt;
-    }
+    if (timers.freezeDuration < timers.freezed) {
+        if (state === 'playing') {
+            randomCall({ probability: params.asteroidsProbability * dt, fn: () => generate.asteroid({ size: 1 }) });
+            randomCall({ probability: params.asteroidsProbability / 4 * dt, fn: () => generate.asteroid({ size: 2 }) });
+            randomCall({ probability: params.asteroidsProbability / 15 * dt, fn: () => generate.asteroid({ size: 3 }) });
+            params.asteroidsProbability += params.asteroidsIncrease * dt;
+            
+            randomCall({ probability: 0.1 * dt, fn: () => generate.asteroid({ size: 1, isFrozen: true }) });
 
-    for (let i = 0; i < asteroids.length; i++) {
-        const asteroid = asteroids[i];
+            if (params.asteroidsProbability > 1.5) {
+                randomCall({ probability: 0.06 * dt, fn: () => generate.asteroid({ size: 2, isFrozen: true }) });
+            } 
 
-        if (asteroid.y > canvas.height) {
-            asteroids.splice(i, 1);
-            i--;
-            if (state === 'playing') {
-                for (let k = 0; k < asteroid.lifes; k++) generate.asteroid({ size: 1 });
+            if (params.asteroidsProbability > 2.5) {
+                randomCall({ probability: 0.035 * dt, fn: () => generate.asteroid({ size: 3, isFrozen: true }) });
             }
-            continue;
         }
-
-        if (asteroid.x < 0 || asteroid.x > canvas.width - asteroid.width) asteroid.dx = -asteroid.dx;
-
-        asteroid.x += asteroid.dx * dt;
-        asteroid.y += asteroid.dy * dt;
-        asteroid.currentRotation += asteroid.angle * dt;
-        
-        asteroid.centerX = asteroid.x + asteroid.width / 2;
-        asteroid.centerY = asteroid.y + asteroid.height / 2;
+    
+        for (let i = 0; i < asteroids.length; i++) {
+            const asteroid = asteroids[i];
+    
+            if (asteroid.y > canvas.height) {
+                asteroids.splice(i, 1);
+                i--;
+                if (state === 'playing' && !asteroid.isFrozen) {
+                    for (let k = 0; k < asteroid.lifes; k++) generate.asteroid({ size: 1 });
+                }
+                continue;
+            }
+    
+            if (asteroid.x < 0 || asteroid.x > canvas.width - asteroid.width) asteroid.dx = -asteroid.dx;
+    
+            asteroid.x += asteroid.dx * dt;
+            asteroid.y += asteroid.dy * dt;
+            asteroid.currentRotation += asteroid.angle * dt;
+            
+            asteroid.centerX = asteroid.x + asteroid.width / 2;
+            asteroid.centerY = asteroid.y + asteroid.height / 2;
+        }
     }
 
     if (state === 'playing' && cursor.x) {
@@ -175,6 +187,8 @@ function update(dt) { /* dt - time in seconds */
     }
 
     if (state === 'playing') {
+        timers.freezed += 1000 * dt;
+
         if (!timers.generatedFires) timers.generatedFires = 0;
 
         timers.generatedFires += 1000 * dt;

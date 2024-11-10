@@ -60,11 +60,14 @@ async function preload() {
     loadImages([
         { name: 'bg_game', src: 'fon.png' },
         { name: 'bg_menu', src: 'menu.jpg' },
+        { name: 'ice_effect', src: 'ice_effect.png' },
         { name: 'asteroid', src: 'astero.png' },
+        { name: 'frozen_asteroid', src: 'astero_frozen.png' },
         { name: 'ship', src: 'ship01.png' },
         { name: 'fire', src: 'fire.png' },
         { name: 'shield', src: 'shield.png' },
         { name: 'explosion', src: 'expl222.png' },
+        { name: 'frozen_explosion', src: 'expl_frozen.png' },
         { name: 'heart', src: 'heart.png' },
         { name: 'heartEmpty', src: 'heart_empty.png' },
     ]);
@@ -119,6 +122,8 @@ function prepareGame() {
     setParams();
 
     timers.generatedFires = null;
+    timers.freezed = null;
+    timers.freezeDuration = null;
 
     asteroids.length = 0;
     fires.length = 0;

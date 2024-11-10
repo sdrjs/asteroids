@@ -7,8 +7,16 @@ function render() {
         ctx.drawImage(I.bg_menu, 0, 0, canvas.width, canvas.height);
     }
 
+    if (timers.freezed < timers.freezeDuration) {
+        ctx.drawImage(I.ice_effect, 0, 0, canvas.width, canvas.height);
+    }
+
     for (let expl of explosions) {
-        ctx.drawImage(I.explosion, expl.sx, expl.sy, explosionParams.sWidth, explosionParams.sHeight, expl.x, expl.y, expl.width, expl.height);
+        if (expl.isFrozen) {
+            ctx.drawImage(I.frozen_explosion, expl.sx, expl.sy, explosionParams.sWidth, explosionParams.sHeight, expl.x, expl.y, expl.width, expl.height);
+        } else {
+            ctx.drawImage(I.explosion, expl.sx, expl.sy, explosionParams.sWidth, explosionParams.sHeight, expl.x, expl.y, expl.width, expl.height);
+        }
     }
 
     for (let fire of fires) {
@@ -20,7 +28,13 @@ function render() {
         ctx.translate(asteroid.centerX, asteroid.centerY);
         ctx.rotate(degToRad(asteroid.currentRotation));
         ctx.translate(-asteroid.centerX, -asteroid.centerY);
-        ctx.drawImage(I.asteroid, asteroid.x, asteroid.y, asteroid.width, asteroid.height);
+
+        if (asteroid.isFrozen) {
+            ctx.drawImage(I.frozen_asteroid, asteroid.x, asteroid.y, asteroid.width, asteroid.height);
+        } else {
+            ctx.drawImage(I.asteroid, asteroid.x, asteroid.y, asteroid.width, asteroid.height);
+        }
+
         ctx.restore();
     }
 

@@ -8,6 +8,7 @@ const generate = (() => {
             maxDy: 125,
             size: 40,
             score: 1,
+            freezeTime: 2000,
         },
         2: {
             lifes: 5,
@@ -15,6 +16,7 @@ const generate = (() => {
             maxDy: 60,
             size: 57,
             score: 3,
+            freezeTime: 5000,
         },
         3: {
             lifes: 25,
@@ -22,10 +24,11 @@ const generate = (() => {
             maxDy: 25,
             size: 85,
             score: 10,
+            freezeTime: 9000,
         },
     };
 
-    function generateAsteroid({ size = 1 } = {}) {
+    function generateAsteroid({ size = 1, isFrozen = false } = {}) {
         const setup = asteroidsSetup[size];
 
         const width = getRandomInteger({ min: setup.size, max: setup.size + 5 });
@@ -39,8 +42,11 @@ const generate = (() => {
     
         const angle = getRandomNumber({ max: setup.maxDy * 2, withOppositeSign: true });
         const currentRotation = getRandomNumber({ max: 180, withOppositeSign: true });
+
+        const freezeSetup = { isFrozen };
+        if (isFrozen) freezeSetup.freezeTime = setup.freezeTime;
     
-        asteroids.push({ x, y, dx, dy, width, height, angle, currentRotation, lifes: setup.lifes, score: setup.score });
+        asteroids.push({ x, y, dx, dy, width, height, angle, currentRotation, lifes: setup.lifes, score: setup.score, ...freezeSetup });
     }
     
     function generateFires() {
@@ -95,8 +101,14 @@ const generate = (() => {
     
         const explosionX = explosionCenterX - explosionWidth / 2;
         const explosionY = explosionCenterY - explosionHeight / 2;
+
+        const isFrozen = asteroid.isFrozen;
+        if (isFrozen && asteroid.freezeTime > timers.freezeDuration - timers.freezed) {
+            timers.freezed = 0;
+            timers.freezeDuration = asteroid.freezeTime;
+        }
     
-        explosions.push({ x: explosionX, y: explosionY, width: explosionWidth, height: explosionHeight, frame: 0, sx: 0, sy: 0 });
+        explosions.push({ x: explosionX, y: explosionY, width: explosionWidth, height: explosionHeight, frame: 0, sx: 0, sy: 0, isFrozen });
     }
 
     function generateShipExplosion() {
