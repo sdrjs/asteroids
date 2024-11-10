@@ -13,19 +13,14 @@ function update(dt) { /* dt - time in seconds */
     if (timers.freezeDuration < timers.freezed) {
         if (state === 'playing') {
             randomCall({ probability: params.asteroidsProbability * dt, fn: () => generate.asteroid({ size: 1 }) });
-            randomCall({ probability: params.asteroidsProbability / 4 * dt, fn: () => generate.asteroid({ size: 2 }) });
-            randomCall({ probability: params.asteroidsProbability / 15 * dt, fn: () => generate.asteroid({ size: 3 }) });
-            params.asteroidsProbability += params.asteroidsIncrease * dt;
+            if (params.asteroidsProbability > 2) randomCall({ probability: params.asteroidsProbability / 4 * dt, fn: () => generate.asteroid({ size: 2 }) });
+            if (params.asteroidsProbability > 3.5) randomCall({ probability: params.asteroidsProbability / 15 * dt, fn: () => generate.asteroid({ size: 3 }) });
             
-            randomCall({ probability: 0.1 * dt, fn: () => generate.asteroid({ size: 1, isFrozen: true }) });
+            if (params.asteroidsProbability > 1.5) randomCall({ probability: 0.1 * dt, fn: () => generate.asteroid({ size: 1, isFrozen: true }) });
+            if (params.asteroidsProbability > 3) randomCall({ probability: 0.06 * dt, fn: () => generate.asteroid({ size: 2, isFrozen: true }) });
+            if (params.asteroidsProbability > 4.5) randomCall({ probability: 0.035 * dt, fn: () => generate.asteroid({ size: 3, isFrozen: true }) });
 
-            if (params.asteroidsProbability > 1.5) {
-                randomCall({ probability: 0.06 * dt, fn: () => generate.asteroid({ size: 2, isFrozen: true }) });
-            } 
-
-            if (params.asteroidsProbability > 2.5) {
-                randomCall({ probability: 0.035 * dt, fn: () => generate.asteroid({ size: 3, isFrozen: true }) });
-            }
+            params.asteroidsProbability += params.asteroidsIncrease * dt;
         }
     
         for (let i = 0; i < asteroids.length; i++) {
