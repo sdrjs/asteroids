@@ -102,4 +102,20 @@ function addButtons() {
             setState('ready');
         },
     });
+
+    buttons.FAQ = new Button({
+        x: canvas.width - 10,
+        y: canvas.height - 10,
+        width: 55,
+        height: 55,
+        radius: 10,
+        fontSize: 22,
+        text: '❓',
+        linearGradient: ['#333', '#222'],
+        align: 'left top',
+        color: "#fff",
+        onClick() {
+            alert(FAQ);
+        },
+    });
 }

@@ -62,6 +62,7 @@ function setState(newState) {
         buttons.upgrade.show();
         buttons.leaderboard.show();
         buttons.settings.show();
+        buttons.FAQ.show();
     }
 
     function hideMenuButtons() {
@@ -69,5 +70,6 @@ function setState(newState) {
         buttons.upgrade.hide();
         buttons.leaderboard.hide();
         buttons.settings.hide();
+        buttons.FAQ.hide();
     }
 }
