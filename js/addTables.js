@@ -232,7 +232,7 @@ function addTables() {
 
     function addDangerIncreaseTable() {
         const minIncrease = 0;
-        const maxIncrease = 5;
+        const maxIncrease = 8;
         let currentIncrease = JSON.parse(localStorage.getItem('dangerIncrease')) || 0;
 
         const tableContent = [

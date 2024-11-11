@@ -2,119 +2,119 @@ const upgrades = {
     shield: {
         title: 'shield',
         description: 'cooldown reduce',
-        levelsCount: 20,
+        levelsCount: 18,
         0: {
-            value: 50000,
+            value: 30000,
         },
         1: {
-            value: 40000,
+            value: 22000,
             cost: 1,
         },
         2: {
-            value: 32000,
+            value: 15500,
             cost: 2,
         },
         3: {
-            value: 25000,
+            value: 10500,
             cost: 3,
         },
         4: {
-            value: 20000,
+            value: 8400,
             cost: 5,
         },
         5: {
-            value: 16000,
+            value: 7000,
             cost: 7,
         },
         6: {
-            value: 13000,
+            value: 5900,
             cost: 9,
         },
         7: {
-            value: 10500,
-            cost: 11,
+            value: 5000,
+            cost: 12,
         },
         8: {
-            value: 8500,
-            cost: 14,
+            value: 4300,
+            cost: 16,
         },
         9: {
-            value: 7000,
-            cost: 17,
-        },
-        10: {
-            value: 5800,
+            value: 3750,
             cost: 21,
         },
+        10: {
+            value: 3300,
+            cost: 27,
+        },
         11: {
-            value: 4800,
-            cost: 25,
+            value: 2900,
+            cost: 34,
         },
         12: {
-            value: 4000,
-            cost: 30,
+            value: 2550,
+            cost: 43,
         },
         13: {
-            value: 3400,
-            cost: 37,
+            value: 2250,
+            cost: 54,
         },
         14: {
-            value: 3000,
-            cost: 45,
-        },
-        15: {
-            value: 2700,
-            cost: 55,
-        },
-        16: {
-            value: 2500,
+            value: 2000,
             cost: 67,
         },
+        15: {
+            value: 1800,
+            cost: 82,
+        },
+        16: {
+            value: 1650,
+            cost: 98,
+        },
         17: {
-            value: 2350,
-            cost: 80,
+            value: 1550,
+            cost: 120,
         },
         18: {
-            value: 2220,
-            cost: 95,
-        },
-        19: {
-            value: 2100,
-            cost: 115,
-        },
-        20: {
-            value: 2000,
+            value: 1500,
             cost: 150,
         },
     },
     firesCount: {
         title: 'power',
         description: 'fires number',
-        levelsCount: 4,
+        levelsCount: 6,
         0: {
             value: 1,
         },
         1: {
             value: 2,
-            cost: 5,
+            cost: 3,
         },
         2: {
             value: 3,
-            cost: 25,
+            cost: 12,
         },
         3: {
             value: 4,
-            cost: 75,
+            cost: 37,
         },
         4: {
             value: 5,
-            cost: 225,
+            cost: 95,
+        },
+        5: {
+            value: 6,
+            cost: 195,
+        },
+        6: {
+            value: 7,
+            cost: 310,
         },
     },
     firesInterval: {
         title: 'speed',
         description: 'fires cooldown',
-        levelsCount: 18,
+        levelsCount: 20,
         0: {
             value: 1000,
         },
@@ -139,56 +139,64 @@ const upgrades = {
             cost: 14,
         },
         6: {
-            value: 600,
-            cost: 19,
+            value: 595,
+            cost: 18,
         },
         7: {
-            value: 565,
-            cost: 25,
+            value: 555,
+            cost: 24,
         },
         8: {
-            value: 535,
-            cost: 32,
+            value: 520,
+            cost: 30,
         },
         9: {
-            value: 510,
-            cost: 40,
+            value: 485,
+            cost: 37,
         },
         10: {
-            value: 490,
-            cost: 50,
+            value: 450,
+            cost: 44,
         },
         11: {
-            value: 475,
-            cost: 62,
+            value: 420,
+            cost: 52,
         },
         12: {
-            value: 460,
-            cost: 78,
+            value: 395,
+            cost: 61,
         },
         13: {
-            value: 450,
-            cost: 85,
+            value: 367,
+            cost: 70,
         },
         14: {
-            value: 440,
-            cost: 100,
+            value: 340,
+            cost: 80,
         },
         15: {
-            value: 430,
-            cost: 120,
+            value: 315,
+            cost: 90,
         },
         16: {
-            value: 420,
-            cost: 140,
+            value: 295,
+            cost: 101,
         },
         17: {
-            value: 410,
-            cost: 160,
+            value: 275,
+            cost: 112,
         },
         18: {
-            value: 400,
-            cost: 180,
+            value: 260,
+            cost: 127,
+        },
+        19: {
+            value: 255,
+            cost: 150,
+        },
+        20: {
+            value: 240,
+            cost: 210,
         },
     },
     freeze: {

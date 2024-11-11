@@ -194,5 +194,5 @@ function update(dt) { /* dt - time in seconds */
         }
     }
 
-    if (state === 'playing') ship.balance = Math.floor(ship.score / 40);
+    if (state === 'playing') ship.balance = Math.floor(ship.score / params.scoresPerGem);
 }

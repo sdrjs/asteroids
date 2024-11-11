@@ -19,6 +19,7 @@ function setParams() {
 
     params.leaderboardPlaces = 10;
     params.changeNicknamePrice = 10;
+    params.scoresPerGem = 20;
 
     setShipParams();
     setFpsParams();
