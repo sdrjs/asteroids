@@ -66,21 +66,22 @@ class User {
     }
 
     async update(action, type) {
+        const shipScore = ship.score;
         const savedUser = await AJAX.get(`${this.#url.users}/${this.id}`);
 
         switch (action) {
             case 'game':
-                const leaderboardData = await this.updateLeaderboard() || {};
+                const leaderboardData = await this.updateLeaderboard(shipScore) || {};
 
                 const gameData = { 
-                    score: ship.score, 
+                    score: shipScore,
                     oldBalance: savedUser.balance, 
                     newBalance: this.balance, 
                     ...leaderboardData
                 };
 
                 await AJAX.put(`${this.#url.users}/${this.id}`, { ...savedUser, balance: this.balance });
-                await this.updateUserLog({ savedUser, action, data: gameData, shortData: `${ship.score} score` });
+                await this.updateUserLog({ savedUser, action, data: gameData, shortData: `${shipScore} score` });
 
                 break;
 
@@ -136,18 +137,18 @@ class User {
         await AJAX.put(this.#url.log, { log: [...oldData.log, `${time} [${id}]${nickname} ${action}${data}`] });
     }
 
-    async updateLeaderboard() {
+    async updateLeaderboard(score) {
         const { leaderboard } = await AJAX.get(this.#url.leaderboard);
 
         const currentPlaceIdx = leaderboard.findIndex(user => user.id === this.id);
         if (currentPlaceIdx !== -1) {
-            if (leaderboard[currentPlaceIdx].score >= ship.score) return;
+            if (leaderboard[currentPlaceIdx].score >= score) return;
 
             leaderboard.splice(currentPlaceIdx, 1); // only one place per user
         }
 
-        if (leaderboard.length < params.leaderboardPlaces || leaderboard[params.leaderboardPlaces - 1].score < ship.score) {
-            let placeIdx = leaderboard.findIndex(user => ship.score > user.score);
+        if (leaderboard.length < params.leaderboardPlaces || leaderboard[params.leaderboardPlaces - 1].score < score) {
+            let placeIdx = leaderboard.findIndex(user => score > user.score);
             if (placeIdx === -1) placeIdx = leaderboard.length;
             
             if (leaderboard.length === params.leaderboardPlaces) {
@@ -157,7 +158,7 @@ class User {
             leaderboard.splice(placeIdx, 0, {
                 id: this.id,
                 nickname: this.nickname,
-                score: ship.score,
+                score,
             });
 
             await AJAX.put(this.#url.leaderboard, { leaderboard });
