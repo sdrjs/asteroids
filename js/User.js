@@ -60,7 +60,7 @@ class User {
 
     async changeNickname() {
         const nickname = this.getNickname();
-        this.balance -= 10;
+        this.balance -= params.changeNicknamePrice;
 
         return await this.update('nickname', nickname);
     }
@@ -112,6 +112,7 @@ class User {
 
                 await AJAX.put(`${this.#url.users}/${this.id}`, { ...savedUser, balance: this.balance, nickname: newNickname });
                 await this.updateUserLog({ savedUser, action, data: nicknameData, shortData: `to ${newNickname}` });
+                await this.updateLeaderboardNickname(newNickname);
 
                 return newNickname;
 
@@ -138,7 +139,7 @@ class User {
     }
 
     async updateLeaderboard(score) {
-        const { leaderboard } = await AJAX.get(this.#url.leaderboard);
+        const leaderboard = await this.getLeaderboard();
 
         const currentPlaceIdx = leaderboard.findIndex(user => user.id === this.id);
         if (currentPlaceIdx !== -1) {
@@ -168,8 +169,28 @@ class User {
     }
 
     async getLeaderboard() {
-        const leaderboard = await AJAX.get(this.#url.leaderboard);
+        const { leaderboard } = await AJAX.get(this.#url.leaderboard);
 
         return leaderboard;
+    }
+
+    async updateLeaderboardNickname(nickname) {
+        const leaderboard = await this.getLeaderboard();
+
+        const isInLeaderboard = leaderboard.some(user => user.id === this.id);
+
+        if (!isInLeaderboard) return;
+
+        const updatedLeaderboard = leaderboard.map(user => {
+            if (user.id === this.id) {
+                user.nickname = nickname;
+            }
+
+            return user;
+        });
+
+        await AJAX.put(this.#url.leaderboard, { leaderboard: updatedLeaderboard });
+
+        tables.leaderboard.redraw();
     }
 }

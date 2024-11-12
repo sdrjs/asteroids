@@ -134,9 +134,9 @@ function addTables() {
     }
 
     async function addLeaderboardTable() {
-        const rows = await user.getLeaderboard();
+        const leaderboard = await user.getLeaderboard();
 
-        const tableRows = rows.leaderboard.map((row, idx) => [idx + 1, row.score, row.nickname]);
+        const tableRows = leaderboard.map((row, idx) => [idx + 1, row.score, row.nickname]);
 
         while (tableRows.length < params.leaderboardPlaces) tableRows.push([tableRows.length + 1, '', '']);
 

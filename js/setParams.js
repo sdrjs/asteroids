@@ -18,7 +18,7 @@ function setParams() {
     params.asteroidsIncrease = 0.02;
 
     params.leaderboardPlaces = 10;
-    params.changeNicknamePrice = 10;
+    params.changeNicknamePrice = 1;
     params.scoresPerGem = 20;
 
     setShipParams();
