@@ -20,7 +20,8 @@ function update(dt) { /* dt - time in seconds */
             if (params.asteroidsProbability > 3) randomCall({ probability: 0.06 * dt, fn: () => generate.asteroid({ size: 2, isFrozen: true }) });
             if (params.asteroidsProbability > 4.5) randomCall({ probability: 0.035 * dt, fn: () => generate.asteroid({ size: 3, isFrozen: true }) });
 
-            params.asteroidsProbability += params.asteroidsIncrease * dt;
+            const currentIncrease = params.asteroidsIncrease * (Math.floor(params.asteroidsProbability / 2) + 1);
+            params.asteroidsProbability += currentIncrease * dt;
         }
     
         for (let i = 0; i < asteroids.length; i++) {
