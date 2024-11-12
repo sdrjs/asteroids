@@ -108,13 +108,13 @@ const upgrades = {
         },
         6: {
             value: 7,
-            cost: 310,
+            cost: 320,
         },
     },
     firesInterval: {
         title: 'speed',
         description: 'fires cooldown',
-        levelsCount: 20,
+        levelsCount: 25,
         0: {
             value: 1000,
         },
@@ -191,18 +191,38 @@ const upgrades = {
             cost: 127,
         },
         19: {
-            value: 255,
-            cost: 150,
+            value: 250,
+            cost: 145,
         },
         20: {
             value: 240,
-            cost: 210,
+            cost: 185,
+        },
+        21: {
+            value: 232,
+            cost: 230,
+        },
+        22: {
+            value: 225,
+            cost: 280,
+        },
+        23: {
+            value: 220,
+            cost: 325,
+        },
+        24: {
+            value: 215,
+            cost: 380,
+        },
+        25: {
+            value: 210,
+            cost: 450,
         },
     },
     freeze: {
         title: 'freeze',
         description: 'freeze time',
-        levelsCount: 10,
+        levelsCount: 12,
         0: {
             value: 1,
         },
@@ -245,6 +265,14 @@ const upgrades = {
         10: {
             value: 2,
             cost: 200,
+        },
+        11: {
+            value: 2.1,
+            cost: 270,
+        },
+        12: {
+            value: 2.2,
+            cost: 360,
         },
     },
 };
