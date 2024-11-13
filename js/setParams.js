@@ -14,12 +14,15 @@ function setParams() {
     params.firesInterval = upgrades.firesInterval[user.upgrades.firesInterval].value;
     params.firesSpeed = 300;
     
-    params.asteroidsProbability = 0.25 * (params.firesCount) + JSON.parse(localStorage.getItem('dangerIncrease')) || 0;
+    params.asteroidsProbability = 0.25 + (params.firesCount - 1) * 0.35 + JSON.parse(localStorage.getItem('dangerIncrease')) || 0;
     params.asteroidsIncrease = 0.01;
+    params.mediumDanger = 2;
+    params.largeDanger = 4.5;
 
     params.leaderboardPlaces = 10;
     params.changeNicknamePrice = 1;
     params.scoresPerGem = 20;
+
 
     setShipParams();
     setFpsParams();

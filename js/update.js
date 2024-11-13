@@ -12,15 +12,19 @@ function update(dt) { /* dt - time in seconds */
 
     if (timers.freezeDuration < timers.freezed) {
         if (state === 'playing') {
-            randomCall({ probability: params.asteroidsProbability * dt, fn: () => generate.asteroid({ size: 1 }) });
-            if (params.asteroidsProbability > 2) randomCall({ probability: params.asteroidsProbability / 4 * dt, fn: () => generate.asteroid({ size: 2 }) });
-            if (params.asteroidsProbability > 3.5) randomCall({ probability: params.asteroidsProbability / 15 * dt, fn: () => generate.asteroid({ size: 3 }) });
+            let smallProbabilityDecrease = 0;
+            if (params.asteroidsProbability > params.mediumDanger) smallProbabilityDecrease++;
+            if (params.asteroidsProbability > params.largeDanger) smallProbabilityDecrease++;
+
+            randomCall({ probability: (params.asteroidsProbability - smallProbabilityDecrease) * dt, fn: () => generate.asteroid({ size: 1 }) });
+            if (params.asteroidsProbability > params.mediumDanger) randomCall({ probability: params.asteroidsProbability / 4 * dt, fn: () => generate.asteroid({ size: 2 }) });
+            if (params.asteroidsProbability > params.largeDanger) randomCall({ probability: params.asteroidsProbability / 15 * dt, fn: () => generate.asteroid({ size: 3 }) });
             
             if (params.asteroidsProbability > 1.5) randomCall({ probability: 0.1 * dt, fn: () => generate.asteroid({ size: 1, isFrozen: true }) });
-            if (params.asteroidsProbability > 3) randomCall({ probability: 0.06 * dt, fn: () => generate.asteroid({ size: 2, isFrozen: true }) });
-            if (params.asteroidsProbability > 4.5) randomCall({ probability: 0.035 * dt, fn: () => generate.asteroid({ size: 3, isFrozen: true }) });
+            if (params.asteroidsProbability > params.mediumDanger + 1) randomCall({ probability: 0.06 * dt, fn: () => generate.asteroid({ size: 2, isFrozen: true }) });
+            if (params.asteroidsProbability > params.largeDanger + 1) randomCall({ probability: 0.035 * dt, fn: () => generate.asteroid({ size: 3, isFrozen: true }) });
 
-            const currentIncrease = params.asteroidsIncrease * (Math.floor(params.asteroidsProbability / 2) + 1);
+            const currentIncrease = params.asteroidsIncrease * (0.6 * Math.floor(params.asteroidsProbability / 2.5) + 1);
             params.asteroidsProbability += currentIncrease * dt;
         }
     
